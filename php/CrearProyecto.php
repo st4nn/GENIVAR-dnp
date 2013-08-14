@@ -122,7 +122,7 @@
 				(
 					'$IdUsuario', 
 					'$IdUsuario', 
-					'" . utf8_decode('Creación de Proyecto ') . "$IdProyecto', 
+					'" . utf8_decode('Creación de Proyecto: ') . "$IdProyecto', 
 					'$Fecha'
 				);";
 

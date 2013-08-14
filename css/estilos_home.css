@@ -157,7 +157,12 @@ footer
 #MyUsersEdit_Message_Key,
 #BuscarFicha_Resultados,
 #CrearFicha,
-#EditarFicha
+#EditarFicha,
+#alertBuscarFicha,
+#alertCrearFicha,
+#alertEditarFicha,
+#CrearFicha_Sector,
+#EditarFicha_Sector
 {
 	display: none;
 }

@@ -59,7 +59,6 @@
 			Powered by <input type='image' src='css/imagenes/LogoGenivar-mini.png' style="height: 1.5em;width:6em";/>
 		</footer>
 	</ul>
-
 		<section id='Users'>
 			<section id='Users_Message' class="ui-state-highlight ui-corner-all">
 								<p>
@@ -138,8 +137,8 @@
 							
 							
 							<section id='MyUsers_InfoUser_Botones'>
-								<button title='Iniciar Sesión' id='btnMyUsers_LoginAsAUser' class='ui-button-default ui-button ui-widget ui-corner-all'  idUser = '' urlFacebook='' urlTwitter='' State='' IdCompany='' UserName='' DisplayName='' Mail='' Owner='' IdInitialRol='' RolName=''><strong><span class='ui-icon ui-icon-play'></span></strong></button>
-								<button title='Editar' id='btnMyUsers_Edit' class='ui-button-default ui-button ui-widget ui-corner-all' idUser = '' urlFacebook='' urlTwitter='' State='' IdCompany='' UserName='' DisplayName='' Mail='' Owner='' IdInitialRol=''><strong><span class='ui-icon ui-icon-person'></span></strong></button>
+								<button title='Iniciar Sesión' id='btnMyUsers_LoginAsAUser' class='ui-button-default ui-button ui-widget ui-corner-all'  idUser = '' State='' IdCompany='' UserName='' DisplayName='' Mail='' Owner='' IdInitialRol='' RolName=''><strong><span class='ui-icon ui-icon-play'></span></strong></button>
+								<button title='Editar' id='btnMyUsers_Edit' class='ui-button-default ui-button ui-widget ui-corner-all' idUser = ''  State='' IdCompany='' UserName='' DisplayName='' Mail='' Owner='' IdInitialRol=''><strong><span class='ui-icon ui-icon-person'></span></strong></button>
 								
 								<button title='Editar Permisos' id='btnMyUsers_EditPermissions' class='ui-button-default ui-button ui-widget ui-corner-all' idUser='' UserName=''><strong><span class='ui-icon ui-icon-unlocked'></span></strong></button>
 								
@@ -216,7 +215,7 @@
 				<input class='inputForm' type='text' id='txtBuscarFicha_Nombre' ></input>
 
 				<label class='labelForm' for='txtBuscarFicha_Sector'>Sector de Actividad Económica: </label>
-				<input class='inputForm' type='text' id='txtBuscarFicha_Sector'></input>
+				<select class='inputForm' id='txtBuscarFicha_Sector'></select>
 
 				<label class='labelForm' for='txtBuscarFicha_FechaIni'>Fecha de Inicio: </label>
 				<input class='inputForm' type='text' id='txtBuscarFicha_FechaIni'></input>
@@ -250,6 +249,13 @@
 				<button class='ui-button-success ui-button ui-widget ui-corner-all' id='btnBuscarFicha_OcultarTabla'>
 					Buscar
 				</button>
+				<div id='alertBuscarFicha' class="ui-state-highlight ui-corner-all">
+					<p>
+						<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em"></span>
+						<strong>Hey!</strong> 
+						<texto>La compañía ha sido creada.</texto>
+					</p>
+				</div>
 				<table id='tblBuscarFicha'>
 				  <thead>
 					<tr>
@@ -268,6 +274,13 @@
 		</section>
 		<section id="CrearFicha">
 			<form id="frmCrearFicha">
+				<div id='alertCrearFicha' class="ui-state-highlight ui-corner-all">
+					<p>
+						<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em"></span>
+						<strong>Hey!</strong> 
+						<texto>La compañía ha sido creada.</texto>
+					</p>
+				</div>
 				<label class='labelForm' for='txtCrearFicha_Numero'>Numero de Ficha: </label>
 				<input class='inputForm' type='number' id='txtCrearFicha_Numero' style="width:30%; height: 1em" required></input>
 
@@ -275,7 +288,15 @@
 				<input class='inputForm' type='text' id='txtCrearFicha_Nombre' required></input>
 
 				<label class='labelForm' for='txtCrearFicha_Sector'>Sector de Actividad Económica: </label>
-				<input class='inputForm' type='text' id='txtCrearFicha_Sector' required></input>
+				<select class='inputForm' id='txtCrearFicha_Sector'></select>
+				<section id='CrearFicha_Sector'>
+					<center>
+						<label class='labelForm' for='txtCreatingUsersCreate_CompanyOther'>Nombre Nuevo Sector: </label><input class='inputForm' type='text' id='txtCreatingUsersCreate_CompanyOther'/>
+						</br>
+						<button class='ui-button-primary ui-button ui-widget ui-corner-all' id='btnCrearFicha_SectorCrear'>Crear</button>
+						<button class='ui-button-error ui-button ui-widget ui-corner-all' id = 'btnCrearFicha_SectorCancelar'>Cancelar</button>
+					</center>
+				</section>
 
 				<label class='labelForm' for='txtCrearFicha_FechaIni'>Fecha de Inicio: </label>
 				<input class='inputForm' type='text' id='txtCrearFicha_FechaIni' required></input>
@@ -359,6 +380,14 @@
 		<section id="EditarFicha">
 			<button id="EditarFicha_Volver" class="ui-button-inverse ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Volver</span></button>
 
+				<div id='alertEditarFicha' class="ui-state-highlight ui-corner-all">
+					<p>
+						<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em"></span>
+						<strong>Hey!</strong> 
+						<texto>La compañía ha sido creada.</texto>
+					</p>
+				</div>
+
 			<form id="frmEditarFicha" IdProyecto="">
 				<h3>Información de Ficha Numero: <span></span></h3>
 				<label class='labelForm' for='txtEditarFicha_Numero'>Numero de Ficha: </label>
@@ -368,7 +397,15 @@
 				<input class='inputForm' type='text' id='txtEditarFicha_Nombre' required></input>
 
 				<label class='labelForm' for='txtEditarFicha_Sector'>Sector de Actividad Económica: </label>
-				<input class='inputForm' type='text' id='txtEditarFicha_Sector' required></input>
+				<select class='inputForm' type='text' id='txtEditarFicha_Sector' required></select>
+				<section id='EditarFicha_Sector'>
+					<center>
+						<label class='labelForm' for='txtEditarFicha_Sector_Otro'>Nombre Nuevo Sector: </label><input class='inputForm' type='text' id='txtEditarFicha_Sector_Otro'/>
+						</br>
+						<button class='ui-button-primary ui-button ui-widget ui-corner-all' id='btnEditarFicha_SectorCrear'>Crear</button>
+						<button class='ui-button-error ui-button ui-widget ui-corner-all' id = 'btnEditarFicha_SectorCancelar'>Cancelar</button>
+					</center>
+				</section>
 
 				<label class='labelForm' for='txtEditarFicha_FechaIni'>Fecha de Inicio: </label>
 				<input class='inputForm' type='text' id='txtEditarFicha_FechaIni' required></input>

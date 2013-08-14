@@ -1,7 +1,7 @@
 <?php 
    include("conectar.php"); 
 	$link=Conectarse(); 
-	$result=mysql_query("SELECT IdDepartamento, Nombre FROM  `Departamento` ORDER BY IdDepartamento",$link); 
+	$result=mysql_query("SELECT IdDepartamento, Nombre FROM  Departamento ORDER BY IdDepartamento",$link); 
 
 	class Departamento
 	{
