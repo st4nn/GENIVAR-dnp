@@ -67,8 +67,42 @@ function arranque()
 	$("#lnkBuscarFicha").on('click', function(){ Seccion("#BuscarFicha"); $("#SelectedSection h4").text("Buscar Ficha");})
 	$("#lnkCrearFicha").on('click', function(){ Seccion("#CrearFicha"); $("#SelectedSection h4").text("Crear Ficha");})
 	
-	$("#frmCrearFicha").on("submit", "frmCrearFicha_Submit");
+	$("#frmCrearFicha").on("submit", frmCrearFicha_Submit);
     
+    $("#CrearFicha_Descripcion .title").hover(
+				function()
+				{
+					if($(this).attr("act") == "")
+					{
+						$(this).css("color", "#003300");
+					}
+				},
+				function()
+				{
+					if($(this).attr("act") == "")
+					{
+						$(this).css("color", "#4b4b4b");
+					}
+				}
+			);
+    $("#MainMenu li a").hover(
+				function()
+				{
+					if($(this).attr("act") == "")
+					{
+						$(this).css("color", "white");
+						$(this).css("background", "#0274b0");
+					}
+				},
+				function()
+				{
+					if($(this).attr("act") == "")
+					{
+						$(this).css("color", "#3b3b3b");
+						$(this).css("background", "#c0c0c0");
+					}
+				}
+			);
 }
 function CargarUsuario()
 {
@@ -153,13 +187,18 @@ function sumarMesesFecha(Fecha, NumDias)
 
 function Seccion(obj)
 {
-	$("#MainMenu li a ").css("background", "#c0c0c0");
-	$("#MainMenu li a ").css("color", "black");
+	$("#MainMenu li a").css("background", "#c0c0c0");
+	$("#MainMenu li a").css("color", "#3b3b3b");
+	$("#MainMenu li a").attr("act", "");
 	
+	//$("#CrearFicha_Descripcion .title").css("color", "#4b4b4b");
+
 	var idLbl = obj.replace("#", "lbl");
+	
+	$("#" + idLbl).attr("act", "true");
 	$("#" + idLbl).css("background", "#45505c");
 	$("#" + idLbl).css("color", "white");
-	
+
 	$("#BuscarFicha").slideUp();
 	$("#CrearFicha").slideUp();
 	$("#Users").slideUp();
@@ -678,11 +717,19 @@ function CrearFicha_Descripcion()
 {
 	var Id = $(this).attr("Caja");
 	$("#CrearFicha_Descripcion").find(".content").fadeOut();
-	$("#CrearFicha_Descripcion").find(".title").css("background", "none");
+	
+	$("#CrearFicha_Descripcion .title").css("background", "none");
+	$("#CrearFicha_Descripcion .title").css("color", "#4b4b4b");
+	$("#CrearFicha_Descripcion .title").attr("act", "");
+	
+	//$("#CrearFicha_Descripcion .title").css("color", "#4b4b4b");
 
-	$(this).css("background", "#CCCCFF");
+	$(this).attr("act", "true");
+	$(this).css("background", "#0274b0");
+	$(this).css("color", "white");
+
 	$("#" + Id).fadeIn();
-	$("#" + Id).css("width", $("#CrearFicha_Descripcion").width() * 0.7);
+	$("#" + Id).css("width", $("#CrearFicha_Descripcion").width() * 0.67);
 }
 function frmCrearFicha_Submit(evento)
 {
@@ -710,5 +757,5 @@ function frmCrearFicha_Submit(evento)
 				Des_MejoresPracticas: $("#txtBuscarFicha_Descripcion_MejoresPracticas").val(),
 				Des_Obsevaciones: $("#txtBuscarFicha_Descripcion_Observaciones").val()
 			}
-		)
+		);
 }

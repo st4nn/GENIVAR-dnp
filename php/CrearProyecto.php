@@ -41,8 +41,8 @@
 	$result = mysql_query($sql, $link);
 
 	$IdProyecto = mysql_insert_id();
-
-	if ($RadicadoId > 0)
+	
+	if ($IdProyecto > 0)
 	{
 		$sql = "INSERT INTO
 			Login_has_Proyectos
@@ -54,6 +54,7 @@
 			)";
 
 		$result = mysql_query($sql, $link);
+		
 
 		$sql = "INSERT INTO
 					ProyectoDatos
@@ -70,15 +71,15 @@
 					)
 				VALUES
 					(
-						$'IdProyecto', 
-						$'IdSector', 
-						$'FechaInicio', 
-						$'FechaFin',
-						$'Entidad',
-						$'Expediente',
-						$'Consultora',
-						$'CostoTotal',
-						$'Fuente'
+						'$IdProyecto', 
+						'$IdSector', 
+						'$FechaInicio', 
+						'$FechaFin',
+						'$Entidad',
+						'$Expediente',
+						'$Consultora',
+						'$CostoTotal',
+						'$Fuente'
 					)";
 
 		$result = mysql_query($sql, $link);
@@ -86,19 +87,21 @@
 		$sql = "INSERT INTO
 					Descripcion
 						(
+							IdProyecto,
 							ObjetivoGeneral,
-							ObjetivoEspecifico,
+							ObjetivosEspecificos,
 							Alcance,
 							Productos,
 							Resultados,
 							Inversion,
 							Herramientas,
 							MejoresPracticas,
-							Obsevaciones
+							Observaciones
 
 						)
 				VALUES
 					(
+						'$IdProyecto',
 						'$Des_ObjetivoGeneral',
 						'$Des_ObjetivoEspecifico',
 						'$Des_Alcance',
@@ -119,7 +122,7 @@
 				(
 					'$IdUsuario', 
 					'$IdUsuario', 
-					'Creación de Proyecto $IdProyecto', 
+					'" . utf8_decode('Creación de Proyecto ') . "$IdProyecto', 
 					'$Fecha'
 				);";
 
