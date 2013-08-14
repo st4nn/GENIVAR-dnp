@@ -1,11 +1,11 @@
 var Usuario;
+var Fichas;
 var Documentos_Path;
 $(document).on("ready", arranque);
 var Meses = new Array('', 'Enero', 'Frebrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
 
 function arranque()
 {
-	$("#CrearFicha_Descripcion .title").on("click", CrearFicha_Descripcion);
 	if(!localStorage.UsuarioDNP)
 	{CerrarSesion();}
 
@@ -103,6 +103,26 @@ function arranque()
 					}
 				}
 			);
+
+ 	$("#CrearFicha_Descripcion .title").on("click", CrearFicha_Descripcion);
+    $("#frmBuscarFicha").on("submit", frmBuscarFicha_Submit);
+
+    $("#btnBuscarFicha_OcultarTabla").on("click", function()
+    {
+    	$("#frmBuscarFicha").slideDown();
+		$("#BuscarFicha_Resultados").slideUp();	
+    });
+
+    $("#EditarFicha_Volver").on("click", function()
+		{
+			$("#BuscarFicha").slideDown();
+			$("#EditarFicha").slideUp();
+		}
+    	);
+
+    $("#BuscarFicha_Resultados .btnBuscarFicha_MasInfo").live("click", btnBuscarFicha_MasInfo_Click);
+
+    $("#EditarFicha_Descripcion_Menu article").on("click", EditarFicha_Descripcion_Menu_article_Click);
 }
 function CargarUsuario()
 {
@@ -202,6 +222,7 @@ function Seccion(obj)
 	$("#BuscarFicha").slideUp();
 	$("#CrearFicha").slideUp();
 	$("#Users").slideUp();
+	$("#EditarFicha").slideUp();
 	$(obj).slideDown();
 }
 function btnCompanyDataCancel_click(evento)
@@ -747,15 +768,146 @@ function frmCrearFicha_Submit(evento)
 				Consultora: $("#txtCrearFicha_Consultora").val(),
 				CostoTotal: $("#txtCrearFicha_Costo").val(),
 				Fuente: $("#txtCrearFicha_Fuente").val(),
-				Des_ObjetivoGeneral: $("#txtBuscarFicha_Descripcion_ObjetivoGeneral").val(),
-				Des_ObjetivoEspecifico: $("#txtBuscarFicha_Descripcion_ObjetivoEspecifico").val(),
-				Des_Alcance: $("#txtBuscarFicha_Descripcion_Alcance").val(),
-				Des_Productos: $("#txtBuscarFicha_Descripcion_Productos").val(),
-				Des_Resultados: $("#txtBuscarFicha_Descripcion_Resultados").val(),
-				Des_Inversion: $("#txtBuscarFicha_Descripcion_Inversion").val(),
-				Des_Herramientas: $("#txtBuscarFicha_Descripcion_Herramientas").val(),
-				Des_MejoresPracticas: $("#txtBuscarFicha_Descripcion_MejoresPracticas").val(),
-				Des_Obsevaciones: $("#txtBuscarFicha_Descripcion_Observaciones").val()
+				Des_ObjetivoGeneral: $("#txtCrearFicha_Descripcion_ObjetivoGeneral").val(),
+				Des_ObjetivoEspecifico: $("#txtCrearFicha_Descripcion_ObjetivoEspecifico").val(),
+				Des_Alcance: $("#txtCrearFicha_Descripcion_Alcance").val(),
+				Des_Productos: $("#txtCrearFicha_Descripcion_Productos").val(),
+				Des_Resultados: $("#txtCrearFicha_Descripcion_Resultados").val(),
+				Des_Inversion: $("#txtCrearFicha_Descripcion_Inversion").val(),
+				Des_Herramientas: $("#txtCrearFicha_Descripcion_Herramientas").val(),
+				Des_MejoresPracticas: $("#txtCrearFicha_Descripcion_MejoresPracticas").val(),
+				Des_Obsevaciones: $("#txtCrearFicha_Descripcion_Observaciones").val()
 			}
 		);
+}
+function frmBuscarFicha_Submit(evento)
+{
+	evento.preventDefault();
+
+	$.post("php/BuscarProyecto.php",
+			{
+				FichaNum: $("#txtBuscarFicha_Numero").val(),
+				Nombre: $("#txtBuscarFicha_Nombre").val(),
+				IdSector: $("#txtBuscarFicha_Sector").val(),
+				FechaInicio: $("#txtBuscarFicha_FechaIni").val(),
+				FechaFin: $("#txtBuscarFicha_FechaFin").val(),
+				Entidad: $("#txtBuscarFicha_Entidad").val(),
+				Expediente: $("#txtBuscarFicha_NumExpediente").val(),
+				Consultora: $("#txtBuscarFicha_Consultora").val(),
+				CostoTotal: $("#txtBuscarFicha_Costo").val(),
+				Fuente: $("#txtBuscarFicha_Fuente").val(),
+				Descripcion: $("#txtBuscarFicha_Descripcion").val()
+			},
+			function(data)
+			{
+				$("#frmBuscarFicha").slideUp();
+				$("#BuscarFicha_Resultados").slideDown();
+
+				$("#tblBuscarFicha tbody tr").remove();
+				Fichas = data;
+				$.each(data,
+						function(index, valor)
+						{
+							var tds;
+
+							tds = "<tr id='" + valor.IdProyecto + "'>";
+									tds += "<td>" + valor.FichaNum + "</td>";
+									tds += "<td>" + valor.Nombre + "</td>";
+									tds += "<td>" + valor.FechaInicio + "</td>";
+									tds += "<td>" + valor.FechaFin + "</td>";
+									tds += "<td>" + valor.Expediente + "</td>";
+									tds += "<td>" + valor.Consultora + "</td>";
+									tds += "<td><button id='btnBuscarFicha_MasInfo" + index + "' class='btnBuscarFicha_MasInfo ui-button-info ui-button ui-widget ui-corner-all' title='Información de:" + valor.Nombre + "'><span class='ui-icon ui-icon-comment'></span></button></td>";
+							tds += '</tr>';	
+
+							$("#tblBuscarFicha tbody").append(tds);
+							
+						}
+				);
+			},
+			"json");
+}
+function btnBuscarFicha_MasInfo_Click()
+{
+	$("#BuscarFicha").slideUp();
+	$("#EditarFicha").slideDown();
+	
+	var IdFicha = $(this).attr("id").replace("btnBuscarFicha_MasInfo", "");
+	
+	$("#EditarFicha").attr("IdProyecto", $(this).parent("td").parent("tr").attr("id"));
+	$("#EditarFicha_Descripcion_Menu").attr("IdProyecto", $(this).parent("td").parent("tr").attr("id"));
+	$("#EditarFicha_Descripcion_Menu").attr("IdFicha", IdFicha);
+	
+	
+	$("#frmEditarFicha h3 span").text(Fichas[IdFicha].FichaNum);
+		$('#txtEditarFicha_Numero').val(Fichas[IdFicha].FichaNum);
+		$('#txtEditarFicha_Nombre').val(Fichas[IdFicha].Nombre);
+		$('#txtEditarFicha_Sector').val(Fichas[IdFicha].IdSector);
+		$('#txtEditarFicha_FechaIni').val(Fichas[IdFicha].FechaInicio);
+		$('#txtEditarFicha_FechaFin').val(Fichas[IdFicha].FechaFin);
+		$('#txtEditarFicha_Entidad').val(Fichas[IdFicha].Entidad);
+		$('#txtEditarFicha_NumExpediente').val(Fichas[IdFicha].Expediente);
+		$('#txtEditarFicha_Consultora').val(Fichas[IdFicha].Consultora);
+		$('#txtEditarFicha_Costo').val(Fichas[IdFicha].CostoTotal);
+		$('#txtEditarFicha_Fuente').val(Fichas[IdFicha].Fuente);
+}
+function EditarFicha_Descripcion_Menu_article_Click()
+{
+	var Descripcion ="";
+	$("#EditarFicha_Descripcion textarea").remove();
+	$("#EditarFicha_Descripcion").append("<textarea style='height:11em;width:97%;'type='text' id='txtEditarFicha_Descripcion' placeholder='" + $(this).attr("Descripcion") + "'></textarea>");
+
+	if($(this).text() == "Objetivos:")
+	{
+		$("#EditarFicha_Descripcion").append("<textarea style='height:11em;width:97%;'type='text' id='txtEditarFicha_Descripcion_2' placeholder='Objetivos Específicos'></textarea>");
+		$("#txtEditarFicha_Descripcion_2").val(Fichas[$(this).parent("div").attr("IdFicha")].ObjetivosEspecificos);
+
+		$("#txtEditarFicha_Descripcion").val(Fichas[$(this).parent("div").attr("IdFicha")].ObjetivoGeneral);
+	}
+
+	if($(this).text() == "Alcance:")
+	{$("#txtEditarFicha_Descripcion").val(Fichas[$(this).parent("div").attr("IdFicha")].Alcance);}
+
+	if($(this).text() == "Productos:")
+	{$("#txtEditarFicha_Descripcion").val(Fichas[$(this).parent("div").attr("IdFicha")].Productos);}
+
+	if($(this).text() == "Resultados:")
+	{$("#txtEditarFicha_Descripcion").val(Fichas[$(this).parent("div").attr("IdFicha")].Resultados);}
+
+	if($(this).text() == "Inversión:")
+	{$("#txtEditarFicha_Descripcion").val(Fichas[$(this).parent("div").attr("IdFicha")].Inversion);}
+
+	if($(this).text() == "Herramientas/Procedimientos")
+	{$("#txtEditarFicha_Descripcion").val(Fichas[$(this).parent("div").attr("IdFicha")].Herramientas);}
+
+	if($(this).text() == "Mejores Practicas:")
+	{$("#txtEditarFicha_Descripcion").val(Fichas[$(this).parent("div").attr("IdFicha")].MejoresPracticas);}
+
+	if($(this).text() == "Observaciones")
+	{$("#txtEditarFicha_Descripcion").val(Fichas[$(this).parent("div").attr("IdFicha")].Observaciones);}
+
+	
+	$("#EditarFicha_Descripcion").dialog({
+				autoOpen: false, 				
+				title: "Editar " + $(this).text(),
+				minWidth: 600,
+				buttons: [
+							{
+								text: "Actualizar",
+								click: function() { EditarFicha($(this).parent("div").attr("IdProyecto"));
+												  }
+							},
+							{
+								text: "Cancelar",
+								click: function() { $(this).dialog("close"); 
+												  }
+							}
+						  ]
+								});
+	
+	$("#EditarFicha_Descripcion").dialog('open');	
+}
+function EditarFicha_Descripcion(IdProyecto)
+{
+
 }

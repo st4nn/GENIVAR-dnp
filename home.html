@@ -60,13 +60,6 @@
 		</footer>
 	</ul>
 
-	<!--
-		<section id="DashBoard">
-		
-		</section>
-	-->
-		
-
 		<section id='Users'>
 			<section id='Users_Message' class="ui-state-highlight ui-corner-all">
 								<p>
@@ -320,40 +313,40 @@
 			  			<div class="content" id="CrearFicha_Descripcion_Objetivos">
 					    	<table>
 					    		<td>
-					    			<label for='txtBuscarFicha_Descripcion'>Objetivo General: </label>
-									<textarea style="height:11em;width:47%;"type='text' id='txtBuscarFicha_Descripcion_ObjetivoGeneral' placeholder="Objetivo General"></textarea>
+					    			<label for='txtCrearFicha_Descripcion'>Objetivo General: </label>
+									<textarea style="height:11em;width:47%;"type='text' id='txtCrearFicha_Descripcion_ObjetivoGeneral' placeholder="Objetivo General"></textarea>
 					    		</td>
 					    		<td>
-					    			<label for='txtBuscarFicha_Descripcion'>Objetivos Específicos: </label>
-									<textarea style="height:11em;width:47%;"type='text' id='txtBuscarFicha_Descripcion_ObjetivoEspecifico' placeholder="Objetivos Específicos"></textarea>
+					    			<label for='txtCrearFicha_Descripcion'>Objetivos Específicos: </label>
+									<textarea style="height:11em;width:47%;"type='text' id='txtCrearFicha_Descripcion_ObjetivoEspecifico' placeholder="Objetivos Específicos"></textarea>
 					    		</td>
 					    	</table>
 				    	</div>
 			  			<div class="content" id="CrearFicha_Descripcion_Alcance">
-							<textarea style="height:11em;width:97%;"type='text' id='txtBuscarFicha_Descripcion_Alcance'  placeholder="Alcance del Estudio"></textarea>
+							<textarea style="height:11em;width:97%;"type='text' id='txtCrearFicha_Descripcion_Alcance'  placeholder="Alcance del Estudio"></textarea>
 				    	</div>
 			  			<div class="content" id="CrearFicha_Descripcion_Productos">
-							<textarea style="height:11em;width:97%;"type='text' id='txtBuscarFicha_Descripcion_Productos' placeholder="Productos del Estudio"></textarea>
+							<textarea style="height:11em;width:97%;"type='text' id='txtCrearFicha_Descripcion_Productos' placeholder="Productos del Estudio"></textarea>
 				    	</div>
 			  		
 			  			<div class="content" id="CrearFicha_Descripcion_Resultados">
-							<textarea style="height:11em;width:97%;"type='text' id='txtBuscarFicha_Descripcion_Resultados' placeholder="Principales Resultados"></textarea>
+							<textarea style="height:11em;width:97%;"type='text' id='txtCrearFicha_Descripcion_Resultados' placeholder="Principales Resultados"></textarea>
 				    	</div>
 			  		
 			  			<div class="content" id="CrearFicha_Descripcion_Inversion">
-							<textarea style="height:11em;width:97%;"type='text' id='txtBuscarFicha_Descripcion_Inversion' placeholder="Monto de Inversión Generado"></textarea>
+							<textarea style="height:11em;width:97%;"type='text' id='txtCrearFicha_Descripcion_Inversion' placeholder="Monto de Inversión Generado"></textarea>
 				    	</div>
 			  		
 			  			<div class="content" id="CrearFicha_Descripcion_Herramientas">
-							<textarea style="height:11em;width:97%;"type='text' id='txtBuscarFicha_Descripcion_Herramientas' placeholder="Principales Herramientas Metodológicas/Procedimientos Técnicos Utilizados"></textarea>
+							<textarea style="height:11em;width:97%;"type='text' id='txtCrearFicha_Descripcion_Herramientas' placeholder="Principales Herramientas Metodológicas/Procedimientos Técnicos Utilizados"></textarea>
 				    	</div>
 			  		
 			  			<div class="content" id="CrearFicha_Descripcion_MejoresPracticas">
-							<textarea style="height:11em;width:97%;"type='text' id='txtBuscarFicha_Descripcion_MejoresPracticas' placeholder="Mejores Prácticas"></textarea>
+							<textarea style="height:11em;width:97%;"type='text' id='txtCrearFicha_Descripcion_MejoresPracticas' placeholder="Mejores Prácticas"></textarea>
 				    	</div>
 			  		
 			  			<div class="content" id="CrearFicha_Descripcion_Observaciones">
-							<textarea style="height:11em;width:97%;"type='text' id='txtBuscarFicha_Descripcion_Observaciones' placeholder="Observaciones"></textarea>
+							<textarea style="height:11em;width:97%;"type='text' id='txtCrearFicha_Descripcion_Observaciones' placeholder="Observaciones"></textarea>
 				    	</div>
 			  		</div>
 				</div>
@@ -361,6 +354,59 @@
 				<center>
 					<input class='ui-button-success ui-button ui-widget ui-corner-all' type='submit' id='btnCrearFicha_Submit' value='Crear'/>				
 				</center>
+			</form>
+		</section>
+		<section id="EditarFicha">
+			<button id="EditarFicha_Volver" class="ui-button-inverse ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Volver</span></button>
+
+			<form id="frmEditarFicha" IdProyecto="">
+				<h3>Información de Ficha Numero: <span></span></h3>
+				<label class='labelForm' for='txtEditarFicha_Numero'>Numero de Ficha: </label>
+				<input class='inputForm' type='number' id='txtEditarFicha_Numero' style="width:30%; height: 1em" required></input>
+
+				<label class='labelForm' for='txtEditarFicha_Nombre'>Proyecto: </label>
+				<input class='inputForm' type='text' id='txtEditarFicha_Nombre' required></input>
+
+				<label class='labelForm' for='txtEditarFicha_Sector'>Sector de Actividad Económica: </label>
+				<input class='inputForm' type='text' id='txtEditarFicha_Sector' required></input>
+
+				<label class='labelForm' for='txtEditarFicha_FechaIni'>Fecha de Inicio: </label>
+				<input class='inputForm' type='text' id='txtEditarFicha_FechaIni' required></input>
+
+				<label class='labelForm' for='txtEditarFicha_FechaFin'>Fecha de Terminación: </label>
+				<input class='inputForm' type='text' id='txtEditarFicha_FechaFin' required></input>
+
+				<label class='labelForm' for='txtEditarFicha_Entidad'>Entidad Beneficiaria: </label>
+				<input class='inputForm' type='text' id='txtEditarFicha_Entidad' required></input>
+
+				<label class='labelForm' for='txtEditarFicha_NumExpediente'>Número de Expediente en Archivo del DNP: </label>
+				<input class='inputForm' type='text' id='txtEditarFicha_NumExpediente' required></input>
+
+				<label class='labelForm' for='txtEditarFicha_Consultora'>Persona/Entidad Consultora: </label>
+				<input class='inputForm' type='text' id='txtEditarFicha_Consultora' required></input>
+
+				<label class='labelForm' for='txtEditarFicha_Costo'>Costo Total del Proyecto: </label>
+				<input class='inputForm' type='numer' id='txtEditarFicha_Costo' placeholder="Col $" required></input>
+
+				<label class='labelForm' for='txtEditarFicha_Fuente'>Fuente de Financiamiento: </label>
+				<input class='inputForm' type='text' id='txtEditarFicha_Fuente' placeholder="Préstamo BID-2079/OC-CO" required></input>				
+				
+				<center>
+					<input class='ui-button-primary ui-button ui-widget ui-corner-all' type='submit' id='btnEditarFicha_Submit' value='Guardar'/>				
+				</center>
+
+					<div id="EditarFicha_Descripcion_Menu" IdProyecto="" IdFicha="">
+						<article class="EditarFicha_Menu_Item" Descripcion="Objetivo General" <strong>Objetivos:</strong></article>
+			 			<article class="EditarFicha_Menu_Item" Descripcion="Alcance del Estudio" <strong>Alcance:</strong></article>
+						<article class="EditarFicha_Menu_Item" Descripcion="Productos del Estudio" <strong>Productos:</strong></article>
+						<article class="EditarFicha_Menu_Item" Descripcion="Principales Resultados" <strong>Resultados:</strong></article>
+						<article class="EditarFicha_Menu_Item" Descripcion="Monto de Inversión Generado" <strong>Inversión:</strong></article>
+						<article class="EditarFicha_Menu_Item" Descripcion="Principales Herramientas Metodológicas/Procedimientos Técnicos Utilizados" <strong>Herramientas/Procedimientos:</strong></article>
+						<article class="EditarFicha_Menu_Item" Descripcion="Mejores Prácticas" <strong>Mejores Practicas:</strong></article>
+						<article class="EditarFicha_Menu_Item" Descripcion="Observaciones" <strong>Observaciones:</strong></article>
+					</div>
+					<div id="EditarFicha_Descripcion"></div>
+				
 			</form>
 		</section>
 </body>

@@ -117,7 +117,7 @@ footer
 {
 	color: white; 
 }
-#DashBoard, #Users, #BuscarFicha, #CrearFicha
+#DashBoard, #Users, #BuscarFicha, #CrearFicha, #EditarFicha
 {
 	left: 19.5%;
 	position: absolute;
@@ -125,7 +125,7 @@ footer
 	width: 79%;
 }
 
-#DashBoard, #Users, #BuscarFicha, #CrearFicha
+#DashBoard, #Users, #BuscarFicha, #CrearFicha, #EditarFicha
 {
 	background: white;
 	border-radius: 0.5em;
@@ -156,7 +156,8 @@ footer
 #Users_Message,
 #MyUsersEdit_Message_Key,
 #BuscarFicha_Resultados,
-#CrearFicha
+#CrearFicha,
+#EditarFicha
 {
 	display: none;
 }
@@ -202,7 +203,7 @@ footer
 	margin: 1em;
 }
 
-.CrearFicha_Descripcion_Menu, .CrearFicha_Descripcion_Contenido
+.CrearFicha_Descripcion_Menu, .CrearFicha_Descripcion_Contenido, #EditarFicha_Descripcion_Menu
 {
 	display: inline-block;
 	margin: 1%;
@@ -234,4 +235,21 @@ footer
 {
 	float: right;
 	width: 67%;	
+}
+.EditarFicha_Menu_Item
+{
+	background: PaleGoldenRod;
+	border-radius: 0.4em;
+	box-shadow: rgba(0,0,0,0.8) 2px 2px 10px;
+	display: inline-block;
+	margin: 1em;
+	padding: 0.6em;
+	text-align: center;
+	width: 25%;
+}
+.EditarFicha_Menu_Item:hover
+{
+	background: #0274b0; 
+	color: white;
+	cursor: pointer;
 }
