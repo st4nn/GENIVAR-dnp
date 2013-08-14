@@ -1,0 +1,281 @@
+@font-face
+{
+	font-family: "Nunito";
+	src: url("Nunito-Regular.ttf");
+}
+	
+body
+{
+/*
+background-image: linear-gradient(bottom, rgb(224,221,208) 3%, rgb(245,241,237) 52%, rgb(245,241,233) 76%);
+background-image: -o-linear-gradient(bottom, rgb(224,221,208) 3%, rgb(245,241,237) 52%, rgb(245,241,233) 76%);
+background-image: -moz-linear-gradient(bottom, rgb(224,221,208) 3%, rgb(245,241,237) 52%, rgb(245,241,233) 76%);
+background-image: -webkit-linear-gradient(bottom, rgb(224,221,208) 3%, rgb(245,241,237) 52%, rgb(245,241,233) 76%);
+background-image: -ms-linear-gradient(bottom, rgb(224,221,208) 3%, rgb(245,241,237) 52%, rgb(245,241,233) 76%);
+
+background-image: -webkit-gradient(
+	linear,
+	left bottom,
+	left top,
+	color-stop(0.03, rgb(224,221,208)),
+	color-stop(0.52, rgb(245,241,237)),
+	color-stop(0.76, rgb(245,241,233))
+);
+*/
+	background: #f8f8f8;
+	display: inline-block;
+	font-family: "Nunito";
+	font-size: 16px;
+	width: 100%;
+}
+header
+{
+	background-image: linear-gradient(right bottom, rgb(0,0,0) 0%, rgb(164,163,173) 50%);
+	background-image: -o-linear-gradient(right bottom, rgb(0,0,0) 0%, rgb(164,163,173) 50%);
+	background-image: -moz-linear-gradient(right bottom, rgb(0,0,0) 0%, rgb(164,163,173) 50%);
+	background-image: -webkit-linear-gradient(right bottom, rgb(0,0,0) 0%, rgb(164,163,173) 50%);
+	background-image: -ms-linear-gradient(right bottom, rgb(0,0,0) 0%, rgb(164,163,173) 50%);
+
+	background-image: -webkit-gradient(
+		linear,
+		right bottom,
+		left top,
+		color-stop(0, rgb(0,0,0)),
+		color-stop(0.5, rgb(164,163,173))
+	);
+	height: 6.5em;
+	/*padding: 2em 0 0 1em;
+	text-align: center;*/
+	width: 100%;
+}
+footer
+{
+	background: none;
+	height: 2em;
+	text-align: right;
+	/*bottom: 0;
+	position:absolute;
+	right: 0;*/
+	
+}
+
+.inputForm
+{
+	margin: 0.8em 0 0.8em 0;
+	padding: 0.4em 0.6em 0.4em 0.6em;
+	width: 35%;
+}
+.labelForm
+{
+	float: left; 
+	clear: right;
+	margin: 0.4em 1.2em 0.4em 0;
+	text-align: right;    
+	width: 35%;
+}
+#MainMenu
+{
+	width: 18%;
+	border-style: solid solid none solid;
+	border-color: #94AA74;
+	border-size: 1px;
+	border-width: 1px;
+	margin: 0;
+}
+#MainMenu li a 
+{
+	color: #3b3b3b;
+  	height: 2em;
+	text-decoration: none;
+	background: #c0c0c0;
+}	
+#MainMenu li a:link
+{
+	/*color: white;*/
+	display: block;
+	/*background: yellow;*/
+	padding: 8px 0 0 10px;
+}
+#MainMenu li a:hover {
+	color: black;
+	background: #f7f7f7;
+	padding: 8px 0 0 10px;
+}
+	
+#SelectedSection
+{
+	display: inline-block; 
+     
+        border-left: 20px solid transparent; 
+        border-top: 40px solid white;   
+        -webkit-border-top-right-radius: 20px;
+		-moz-border-radius-topright: 20px;
+		border-top-right-radius: 20px;
+
+        height: 10em;
+        padding: 0px;
+        line-height: 10%; 
+        
+		position: absolute;
+		top: 3.85em;
+		left: 21em;
+		
+		width: 40%;
+}
+#SelectedSection h4
+{
+		position: absolute;
+		top: -2em;
+		left: 1em;
+}
+
+#WelcomeMessage 
+{ 
+        font-weight: bold; 
+        display: inline-block; 
+     
+        border-right: 30px solid transparent; 
+        border-bottom: 60px solid #4c4c4c;   
+     
+        height: 0; 
+        line-height: 50px; 
+        width: 20em;
+        
+}
+#WelcomeMessage h5
+{
+	color: white; 
+}
+#DashBoard, #Users, #BuscarFicha, #CrearFicha
+{
+	border-left-style: ridge;
+	left: 18.5%;
+	position: absolute;
+	top: 6.6em;
+	width: 81.5%;
+}
+/*DashBoard*/
+#DashBoard, #Users, #BuscarFicha, #CrearFicha
+{
+	background: white;
+	border-radius: 0.5em;
+	box-shadow: rgba(0,0,0,0.8) 0px 4px 10px;
+}
+/*	background: PaleGoldenRod ;*/
+	
+/*24 de Enero*/
+#MyAccount_Options_CreatingUsers
+#AccessData_Message, 
+#alertEstadoLogin, 
+#CompanyData, 
+#CompanyData_Edit,
+#CreatingUsers_Create,
+#MyUsers_Delete, 
+#MyUsers_DeleteAlert, 
+#MyUsers_DeleteUser, 
+#MyUsersEdit_CompanyData, 
+#MyUsersEdit_Message, 
+#MyUsers_Edit, 
+#MyUsers_Edit_Confirm, 
+#MyAccount_Options_CreatingUsers,
+#MyAccount_Options_Permissions_Delete, 
+#MyUsersEdit_Permissions,  
+#PersonalInformation_Message,
+#Users,
+#tableDeleteMyUsers,
+#MyUsers_Edit_Key,
+#Users_Message,
+#MyUsersEdit_Message_Key,
+#BuscarFicha_Resultados,
+#CrearFicha
+{
+	display: none;
+}
+#MyUsers_InfoUser
+{
+	border-radius: 0.6em;
+	border-style: solid;
+	border-width: 2px;
+	box-shadow: rgba(0,0,0,0.8) 0px 4px 10px;
+	margin: 2em;
+	padding: 2em;
+	width: 90%;
+}
+#MyUsers_InfoUser li
+{
+	display: block;
+	margin: 0 0 0 3em;
+}
+#MyUsers_InfoUser #MyUsers_InfoUser_Botones
+{
+	display: block;
+	position: absolute;
+	left: 4em;
+	bottom: 3em;
+	width: 4em;
+}
+#tablaRadicado_Radicado
+{
+	text-decoration: underline;
+}
+#tablaRadicado_Radicado:hover
+{
+	cursor: pointer;	
+}
+
+#tablaRadicados tbody tr:hover
+{
+	background: #F0F0F0;
+}
+#tableMyUsers td
+{
+	cursor: pointer;
+}
+.password {
+	font-size : 12px;
+	border : 1px solid #cc9933;
+	/*width : 200px;*/
+	font-family : arial, sans-serif;
+}
+.pstrength-minchar {
+	font-size : 10px;
+}
+
+#MyAccount_Options_MyUsers
+{
+	margin: 1em;
+}
+
+.CrearFicha_Descripcion_Menu, .CrearFicha_Descripcion_Contenido
+{
+	display: inline-block;
+	margin: 1%;
+	padding: 1% 0;
+	vertical-align: top;
+	width: 97%;
+}
+
+#CrearFicha_Descripcion div.content
+{
+	display: none;
+}
+.CrearFicha_Descripcion_Menu 
+{
+	cursor: pointer;
+	padding: 0.2em;
+	width: 25%;
+}
+.CrearFicha_Descripcion_Menu article
+{
+	padding: 0.2em;
+}
+.CrearFicha_Descripcion_Menu article:hover
+{
+	color: #003300;
+}
+
+.CrearFicha_Descripcion_Contenido
+{
+	float: right;
+	width: 70%;	
+}

@@ -1,0 +1,74 @@
+@font-face
+{
+	font-family: "Nunito";
+	src: url("Nunito-Regular.ttf");
+}
+article
+{
+	border-radius: 0.5em;
+	box-shadow: rgba(0,0,0,0.8) 0px 4px 10px;
+}
+body
+{
+background-image: linear-gradient(bottom, rgb(224,221,208) 3%, rgb(245,241,237) 52%, rgb(245,241,233) 76%);
+background-image: -o-linear-gradient(bottom, rgb(224,221,208) 3%, rgb(245,241,237) 52%, rgb(245,241,233) 76%);
+background-image: -moz-linear-gradient(bottom, rgb(224,221,208) 3%, rgb(245,241,237) 52%, rgb(245,241,233) 76%);
+background-image: -webkit-linear-gradient(bottom, rgb(224,221,208) 3%, rgb(245,241,237) 52%, rgb(245,241,233) 76%);
+background-image: -ms-linear-gradient(bottom, rgb(224,221,208) 3%, rgb(245,241,237) 52%, rgb(245,241,233) 76%);
+
+background-image: -webkit-gradient(
+	linear,
+	left bottom,
+	left top,
+	color-stop(0.03, rgb(224,221,208)),
+	color-stop(0.52, rgb(245,241,237)),
+	color-stop(0.76, rgb(245,241,233))
+);
+	display: inline-block;
+	font-family: "Nunito";
+	font-size: 16px;
+	width: 100%;
+}
+header
+{
+	background: url("imagenes/Logo.png") no-repeat 50%;
+	height: 12.5em;
+	width: 100%;
+}
+footer
+{
+	background: none;
+	bottom: 2em;
+	position:absolute;
+	right: 0;
+	text-align: right;
+}
+#alertEstadoLogin
+{
+	display: none;
+}
+#frmLogin
+{
+	background: #F0F0F0;
+	border-radius: 0.5em;
+	box-shadow: rgba(0,0,0,0.8) 2px 2px 8px;
+	display: block;
+	margin: 1em auto;
+	padding: 0.4em;
+	text-align: center;
+	width: 40%;
+}
+.inputForm
+{
+	margin: 0.8em 0 0.8em 0;
+	padding: 0.4em 0.6em 0.4em 0.6em;
+	width: 35%;
+}
+.labelForm
+{
+	float: left; 
+	clear: right;
+	margin: 0.4em 1.2em 0.4em 0;
+	text-align: right;    
+	width: 35%;
+}

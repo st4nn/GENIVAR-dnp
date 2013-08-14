@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8"/>
+	<title>DNP</title>
+	
+	<script src="Tools/HTML5/HTML5_enabling_script.js"></script>
+	<script src="Tools/HTML5/jquery.js"></script>
+	<script src="Tools/HTML5/jquery-ui.js"></script>
+	<script src="Tools/HTML5/prefixfree.min.js"></script>
+	
+		<link rel="stylesheet" href="css/jquery-ui-1.8.16.custom.css"/>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    
+    <link rel="stylesheet" href="css/estilos_home.css" />
+    
+	<script src="Tools/HTML5/daterangepicker.jQuery.js"></script>
+	<script src="Tools/HTML5/date.js"></script>
+	
+	<!--
+	<script src="Tools/datepicker/datepicker.js"></script>
+	<link rel="stylesheet" type="text/css" href="Tools/datepicker/base.css" />
+	<link rel="stylesheet" type="text/css" href="Tools/datepicker/clean.css" />
+-->
+	
+	<script src="js/funciones_home.js"></script>
+
+	<!--elFinder-->
+	<link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui-1.8.16.custom.css">
+	
+	<script src="Tools/jquery.dataTables.js"></script>
+	<script src="Tools/jquery.pstrength-min.1.2.js"></script>
+	<script src="js/lang_es.js"></script>
+	
+	<link  rel="shortcut icon" href="css/imagenes/favicon.ico" />
+</head>
+<body>
+<header>
+	<input id='imgHeader' type='image' style="height: 3em;width:auto;" src='css/imagenes/Logo.png'/>
+	<br>
+	<div id='WelcomeMessage'>
+		<h5 id='lblWelcome'>
+			<label id='labelWelcome'></label>: <span></span>
+		</h5>
+		<h5 id='lblWelcomeRol'>
+			<label id='labelWelcomeRol'></label>: <span></span>
+		</h5>		
+	</div>
+	<article id='SelectedSection'><h4></h4></article>
+</header>
+	<ul id='MainMenu'>
+		<!--<li id='lnkHome'><a id='lblHome' href="#DashBoard"></a></li>-->
+		<li id='lnkBuscarFicha'><a id='lblBuscarFicha' href="#BuscarFicha"></a></li>
+		<li id='lnkCrearFicha'><a id='lblCrearFicha' href="#CrearFicha"></a></li>
+		<li id='lnkUsers'><a id='lblUsers' href="#Users"></a></li>
+		<br>
+		<li id="lnkLogout"><a id='lblLogout' href=''></a></li>
+		<footer>
+			Powered by <input type='image' src='css/imagenes/LogoGenivar-mini.png' style="height: 1.5em;width:6em";/>
+		</footer>
+	</ul>
+
+	<!--
+		<section id="DashBoard">
+		
+		</section>
+	-->
+		
+
+		<section id='Users'>
+			<section id='Users_Message' class="ui-state-highlight ui-corner-all">
+								<p>
+									<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+									<strong>Hey!</strong> 
+									<texto>.</texto>
+								</p>
+							</section>
+			<section id='MyAccount_Options_CreatingUsers'>
+					<form id='CreatingUsersCreate'>
+							<div id='CreatingUsers_Create' class="ui-state-highlight ui-corner-all">
+								<p>
+									<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+									<strong>Hey!</strong> 
+									<texto>La compañía ha sido creada.</texto>
+								</p>
+							</div>
+						<label class='labelForm' for='txtCreatingUsersCreate_User'>Usuario: </label><input class='inputForm' type='text' id='txtCreatingUsersCreate_User' required/>
+						<label class='labelForm' for='txtCreatingUsersCreate_Password'>Clave: </label><input class='password inputForm' type='password' id='txtCreatingUsersCreate_Password' required/>
+						<label class='labelForm' for='txtCreatingUsersCreate_ReTypePassword'>Nuevamente la clave: </label><input class='inputForm' type='password' id='txtCreatingUsersCreate_ReTypePassword'/>
+						
+						<label class='labelForm' for='cboCreatingUsersCreate_Rol'>Rol</label><select class='inputForm' id='cboCreatingUsersCreate_Rol'></select>
+						<label class='labelForm' for='txtCreatingUsersCreate_Name'>Nombre: </label><input class='inputForm' type='text' id='txtCreatingUsersCreate_Name' required/>
+						<label class='labelForm' for='txtCreatingUsersCreate_DisplayName'>NickName: </label><input class='inputForm' type='text' id='txtCreatingUsersCreate_DisplayName' required/>
+						<label class='labelForm' for='txtCreatingUsersCreate_Email'>Correo: </label><input class='inputForm' type='email' id='txtCreatingUsersCreate_Email'/>
+						
+						<label class='labelForm' for='txtCreatingUsersCreate_Company'>Departamento: </label><select class='inputForm' id='txtCreatingUsersCreate_Company'></select>
+						
+						<section id='CompanyData'>
+							<center>
+								<label class='labelForm' id='lblCompanyURL' for='txtCreatingUsersCreate_CompanyOther'>Nombre Nuevo Departamento: </label><input class='inputForm' type='text' id='txtCreatingUsersCreate_CompanyOther'/>
+								</br>
+								<button class='ui-button-primary ui-button ui-widget ui-corner-all' id='btnCompanyDataCreate'>Crear</button>
+								<button class='ui-button-error ui-button ui-widget ui-corner-all' id = 'btnCompanyDataCancel'>Cancelar</button>
+							</center>
+						</section>
+
+						<label class='labelForm' for='txtCreatingUsersCreate_Phone'>Teléfono: </label><input class='inputForm' type='text' id='txtCreatingUsersCreate_Phone'/>
+						</br></br>
+						<center>
+						<input class='ui-button-success ui-button ui-widget ui-corner-all' type='submit' id='btnMyAccount_Save' value='Crear'/>
+						<button class='ui-button-default ui-button ui-widget ui-corner-all' id='btnMyAccount_CreatingUsersCreate_Reset'>Limpiar</button>
+						</center>
+						</br></br>
+					</form>
+				</section>
+				<section id='MyAccount_Options_MyUsers'>
+					<center>
+						<button id='tableMyUsersRefresh' title"Refrescar" class='ui-button-default ui-button ui-widget ui-corner-all'><strong><span class="ui-icon ui-icon-refresh" style="color: green;"></span></strong></button>
+						<button id='lnkCreatingUsers' class='ui-button-default ui-button ui-widget ui-corner-all' title='Crear Usuario'><strong><span class="ui-icon ui-icon-plusthick" style="color: green;"></span></strong></button>
+					</center>
+						<div id='MyUsers_DeleteAlert' class="ui-state-highlight ui-corner-all">
+								<p>
+									<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+									<strong>Hey!</strong> 
+									<texto>La compañía ha sido creada.</texto>
+								</p>
+						</div>
+					<table id='tableMyUsers'>
+					   <thead>
+						<tr>
+							<th>Usuario</th>
+							<th>Nombre</th>
+							<th>Estado</th>
+							<th>Rol</th>
+						</tr>
+					   </thead>
+					   <tbody></tbody>
+					</table>
+						<section id='MyUsers_InfoUser'>
+							<li id='MyUsers_Info_NickName'>NickName: <span></span></li>
+							<li id='MyUsers_Info_Mail'>Correo: <span></span></li>
+							<li id='MyUsers_Info_Phone'>Telefono: <span></span></li>
+							<li id='MyUsers_Info_Owner'>Creado Por: <span></span></li>
+							<li id='MyUsers_Info_Company'>Departamento: <span></span></li>
+							
+							
+							<section id='MyUsers_InfoUser_Botones'>
+								<button title='Iniciar Sesión' id='btnMyUsers_LoginAsAUser' class='ui-button-default ui-button ui-widget ui-corner-all'  idUser = '' urlFacebook='' urlTwitter='' State='' IdCompany='' UserName='' DisplayName='' Mail='' Owner='' IdInitialRol='' RolName=''><strong><span class='ui-icon ui-icon-play'></span></strong></button>
+								<button title='Editar' id='btnMyUsers_Edit' class='ui-button-default ui-button ui-widget ui-corner-all' idUser = '' urlFacebook='' urlTwitter='' State='' IdCompany='' UserName='' DisplayName='' Mail='' Owner='' IdInitialRol=''><strong><span class='ui-icon ui-icon-person'></span></strong></button>
+								
+								<button title='Editar Permisos' id='btnMyUsers_EditPermissions' class='ui-button-default ui-button ui-widget ui-corner-all' idUser='' UserName=''><strong><span class='ui-icon ui-icon-unlocked'></span></strong></button>
+								
+								<button title='Cambiar Clave' id='btnMyUsers_KeyChange' class='ui-button-default ui-button ui-widget ui-corner-all' idUser='' UserName=''><strong><span class='ui-icon ui-icon-key'></span></strong></button>
+							</section>
+						</section>
+				
+					<div id='MyUsers_Edit' title='Editar' IdUsuario='0'>
+							<section id='MyUsersEdit_Message' class="ui-state-highlight ui-corner-all">
+								<p>
+									<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+									<strong>Hey!</strong> 
+									<texto>.</texto>
+								</p>
+							</section>
+						</center>		
+						<form id="MyUsers_Edit_Key">
+							<section id='MyUsersEdit_Message_Key' class="ui-state-highlight ui-corner-all">
+								<p>
+									<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+									<strong>Hey!</strong> 
+									<texto>.</texto>
+								</p>
+							</section>
+							<label class='labelForm' for='txtMyUsersEdit_Password'>Clave: </label><input class='password inputForm' type='password' id='txtMyUsersEdit_Password' />
+							<label class='labelForm' for='txtMyUsersEdit_ReTypePassword'>Nuevamente la Clave: </label><input class='inputForm' type='password' id='txtMyUsersEdit_ReTypePassword'/>
+						</form>
+
+						<label class='labelForm' for='txtMyUsersEdit_State'>Estado: </label>
+						<select class='inputForm' id='txtMyUsersEdit_State'>
+							<option value='Activo'>Activo</option>
+							<option value='Inactivo'>Inactivo</option>		
+						</select>																						
+
+						<label class='labelForm' for='txtMyUsersEdit_Name'>Nombre: </label><input class='inputForm' type='text' id='txtMyUsersEdit_Name' />
+						<label class='labelForm' for='txtMyUsersEdit_DisplayName'>NickName: </label><input class='inputForm' type='text' id='txtMyUsersEdit_DisplayName' />
+						<label class='labelForm' for='txtMyUsersEdit_Email'>Correo: </label><input class='inputForm' type='email' id='txtMyUsersEdit_Email'/>
+						<label class='labelForm' for='txtMyUsersEdit_Company'>Departamento: </label>
+						<select class='inputForm' id='txtMyUsersEdit_Company'></select>
+						<section id='CompanyData_Edit'>
+							<center>
+								<label class='labelForm' id='lblCompanyURL' for='txtCreatingUsersEdit_CompanyOther'>Nombre Nuevo Departamento: </label><input class='inputForm' type='text' id='txtCreatingUsersEdit_CompanyOther'/>
+								</br>
+								<button class='ui-button-primary ui-button ui-widget ui-corner-all' id='btnCompanyDataCreate_Edit'>Crear</button>
+								<button class='ui-button-error ui-button ui-widget ui-corner-all' id = 'btnCompanyDataCancel_Edit'>Cancelar</button>
+							</center>
+						</section>
+
+						<label class='labelForm' for='txtMyUsersEdit_Phone'>Telefono: </label><input class='inputForm' type='text' id='txtMyUsersEdit_Phone'/>
+						<center>
+					</div>
+				</section>
+				<section id='MyUsersEdit_Permissions'>
+					<label for='MyUsersEdit_Permissions_Rol'>Rol</label>
+					<select id='MyUsersEdit_Permissions_Rol'></select>
+					<table id='UserTableFunctions'>
+					  <thead>
+						<tr>
+							<th>Estado</th>
+							<th>Nombre</th>
+							<th>Función</th>
+						</tr>
+					  </thead>
+					  <tbody></tbody>
+					</table>
+				</section>
+		</section>
+		<section id="BuscarFicha">
+			<form id="frmBuscarFicha">
+				<label class='labelForm' for='txtBuscarFicha_Numero'>Numero de Ficha: </label>
+				<input class='inputForm' type='number' id='txtBuscarFicha_Numero' style="width:30%; height: 1em"></input>
+
+				<label class='labelForm' for='txtBuscarFicha_Nombre'>Proyecto: </label>
+				<input class='inputForm' type='text' id='txtBuscarFicha_Nombre' ></input>
+
+				<label class='labelForm' for='txtBuscarFicha_Sector'>Sector de Actividad Económica: </label>
+				<input class='inputForm' type='text' id='txtBuscarFicha_Sector'></input>
+
+				<label class='labelForm' for='txtBuscarFicha_FechaIni'>Fecha de Inicio: </label>
+				<input class='inputForm' type='text' id='txtBuscarFicha_FechaIni'></input>
+
+				<label class='labelForm' for='txtBuscarFicha_FechaFin'>Fecha de Terminación: </label>
+				<input class='inputForm' type='text' id='txtBuscarFicha_FechaFin'></input>
+
+				<label class='labelForm' for='txtBuscarFicha_Entidad'>Entidad Beneficiaria: </label>
+				<input class='inputForm' type='text' id='txtBuscarFicha_Entidad'></input>
+
+				<label class='labelForm' for='txtBuscarFicha_NumExpediente'>Número de Expediente en Archivo del DNP: </label>
+				<input class='inputForm' type='text' id='txtBuscarFicha_NumExpediente'></input>
+
+				<label class='labelForm' for='txtBuscarFicha_Consultora'>Persona/Entidad Consultora: </label>
+				<input class='inputForm' type='text' id='txtBuscarFicha_Consultora'></input>
+
+				<label class='labelForm' for='txtBuscarFicha_Costo'>Costo Total del Proyecto: </label>
+				<input class='inputForm' type='text' id='txtBuscarFicha_Costo' placeholder="Col $"></input>
+
+				<label class='labelForm' for='txtBuscarFicha_Fuente'>Fuente de Financiamiento: </label>
+				<input class='inputForm' type='text' id='txtBuscarFicha_Fuente' placeholder="Préstamo BID-2079/OC-CO"></input>				
+
+				<label class='labelForm' for='txtBuscarFicha_Descripcion'>Descripción: </label>
+				<textarea class='inputForm' type='text' id='txtBuscarFicha_Descripcion' ></textarea>				
+				<br />
+				<center>
+					<input class='ui-button-success ui-button ui-widget ui-corner-all' type='submit' id='btnBuscarFicha_Submit' value='Buscar'/>				
+				</center>
+			</form>
+			<section id='BuscarFicha_Resultados'>
+				<button class='ui-button-success ui-button ui-widget ui-corner-all' id='btnBuscarFicha_OcultarTabla'>
+					Buscar
+				</button>
+				<table id='tblBuscarFicha'>
+				  <thead>
+					<tr>
+						<th>Ficha Num</th>
+						<th>Proyecto</th>
+						<th>Fecha Inicio</th>
+						<th>Fecha Fin</th>
+						<th>Número de Expediente</th>
+						<th>Persona/Entidad Consultora</th>
+						<th>Mas Info</th>
+					</tr>
+				  </thead>
+				  <tbody></tbody>
+				</table>
+			</section>
+		</section>
+		<section id="CrearFicha">
+			<form id="frmCrearFicha">
+				<label class='labelForm' for='txtCrearFicha_Numero'>Numero de Ficha: </label>
+				<input class='inputForm' type='number' id='txtCrearFicha_Numero' style="width:30%; height: 1em" required></input>
+
+				<label class='labelForm' for='txtCrearFicha_Nombre'>Proyecto: </label>
+				<input class='inputForm' type='text' id='txtCrearFicha_Nombre' required></input>
+
+				<label class='labelForm' for='txtCrearFicha_Sector'>Sector de Actividad Económica: </label>
+				<input class='inputForm' type='text' id='txtCrearFicha_Sector' required></input>
+
+				<label class='labelForm' for='txtCrearFicha_FechaIni'>Fecha de Inicio: </label>
+				<input class='inputForm' type='text' id='txtCrearFicha_FechaIni' required></input>
+
+				<label class='labelForm' for='txtCrearFicha_FechaFin'>Fecha de Terminación: </label>
+				<input class='inputForm' type='text' id='txtCrearFicha_FechaFin' required></input>
+
+				<label class='labelForm' for='txtCrearFicha_Entidad'>Entidad Beneficiaria: </label>
+				<input class='inputForm' type='text' id='txtCrearFicha_Entidad' required></input>
+
+				<label class='labelForm' for='txtCrearFicha_NumExpediente'>Número de Expediente en Archivo del DNP: </label>
+				<input class='inputForm' type='text' id='txtCrearFicha_NumExpediente' required></input>
+
+				<label class='labelForm' for='txtCrearFicha_Consultora'>Persona/Entidad Consultora: </label>
+				<input class='inputForm' type='text' id='txtCrearFicha_Consultora' required></input>
+
+				<label class='labelForm' for='txtCrearFicha_Costo'>Costo Total del Proyecto: </label>
+				<input class='inputForm' type='numer' id='txtCrearFicha_Costo' placeholder="Col $" required></input>
+
+				<label class='labelForm' for='txtCrearFicha_Fuente'>Fuente de Financiamiento: </label>
+				<input class='inputForm' type='text' id='txtCrearFicha_Fuente' placeholder="Préstamo BID-2079/OC-CO" required></input>				
+
+				<div id='CrearFicha_Descripcion'>
+					<div class="CrearFicha_Descripcion_Menu">
+						<article class="title" Caja="CrearFicha_Descripcion_Objetivos"><strong>Objetivos</strong></article>
+			  			<article class="title" Caja="CrearFicha_Descripcion_Alcance"><strong>Alcance</strong></article>
+						<article class="title" Caja="CrearFicha_Descripcion_Productos"><strong>Productos</strong></article>
+						<article class="title" Caja="CrearFicha_Descripcion_Resultados"><strong>Resultados:</strong></article>
+						<article class="title" Caja="CrearFicha_Descripcion_Inversion"><strong>Inversión:</strong></article>
+						<article class="title" Caja="CrearFicha_Descripcion_Herramientas"><strong>Herramientas/Procedimientos:</strong></article>
+						<article class="title" Caja="CrearFicha_Descripcion_MejoresPracticas"><strong>Mejores Practicas:</strong></article>
+						<article class="title" Caja="CrearFicha_Descripcion_Observaciones"><strong>Observaciones:</strong></article>
+					</div>
+				  	<div class="CrearFicha_Descripcion_Contenido">
+			  			<div class="content" id="CrearFicha_Descripcion_Objetivos">
+					    	<table>
+					    		<td>
+					    			<label for='txtBuscarFicha_Descripcion'>Objetivo General: </label>
+									<textarea style="height:11em;width:47%;"type='text' id='txtBuscarFicha_Descripcion_ObjetivoGeneral' placeholder="Objetivo General"></textarea>
+					    		</td>
+					    		<td>
+					    			<label for='txtBuscarFicha_Descripcion'>Objetivos Específicos: </label>
+									<textarea style="height:11em;width:47%;"type='text' id='txtBuscarFicha_Descripcion_ObjetivoEspecifico' placeholder="Objetivos Específicos"></textarea>
+					    		</td>
+					    	</table>
+				    	</div>
+			  			<div class="content" id="CrearFicha_Descripcion_Alcance">
+							<textarea style="height:11em;width:97%;"type='text' id='txtBuscarFicha_Descripcion_Alcance'  placeholder="Alcance del Estudio"></textarea>
+				    	</div>
+			  			<div class="content" id="CrearFicha_Descripcion_Productos">
+							<textarea style="height:11em;width:97%;"type='text' id='txtBuscarFicha_Descripcion_Productos' placeholder="Productos del Estudio"></textarea>
+				    	</div>
+			  		
+			  			<div class="content" id="CrearFicha_Descripcion_Resultados">
+							<textarea style="height:11em;width:97%;"type='text' id='txtBuscarFicha_Descripcion_Resultados' placeholder="Principales Resultados"></textarea>
+				    	</div>
+			  		
+			  			<div class="content" id="CrearFicha_Descripcion_Inversion">
+							<textarea style="height:11em;width:97%;"type='text' id='txtBuscarFicha_Descripcion_Inversion' placeholder="Monto de Inversión Generado"></textarea>
+				    	</div>
+			  		
+			  			<div class="content" id="CrearFicha_Descripcion_Herramientas">
+							<textarea style="height:11em;width:97%;"type='text' id='txtBuscarFicha_Descripcion_Herramientas' placeholder="Principales Herramientas Metodológicas/Procedimientos Técnicos Utilizados"></textarea>
+				    	</div>
+			  		
+			  			<div class="content" id="CrearFicha_Descripcion_MejoresPracticas">
+							<textarea style="height:11em;width:97%;"type='text' id='txtBuscarFicha_Descripcion_MejoresPracticas' placeholder="Mejores Prácticas"></textarea>
+				    	</div>
+			  		
+			  			<div class="content" id="CrearFicha_Descripcion_Observaciones">
+							<textarea style="height:11em;width:97%;"type='text' id='txtBuscarFicha_Descripcion_Observaciones' placeholder="Observaciones"></textarea>
+				    	</div>
+			  		</div>
+				</div>
+				<br />
+				<center>
+					<input class='ui-button-success ui-button ui-widget ui-corner-all' type='submit' id='btnCrearFicha_Submit' value='Crear'/>				
+				</center>
+			</form>
+		</section>
+</body>
+</html>
