@@ -1006,7 +1006,7 @@ function CargarSectores()
 	$("#txtBuscarFicha_Sector option").remove();
 	$("#txtCrearFicha_Sector option").remove();
 	$("#txtEditarFicha_Sector option").remove();
-
+	$("#txtBuscarFicha_Sector").append("<option value=''>Ninguno</option>");
 	$.post("php/CargarSectores.php",
 			function(data)
 			{

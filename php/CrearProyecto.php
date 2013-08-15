@@ -97,7 +97,6 @@
 							Herramientas,
 							MejoresPracticas,
 							Observaciones
-
 						)
 				VALUES
 					(
@@ -112,7 +111,7 @@
 						'$Des_MejoresPracticas',
 						'$Des_Obsevaciones'
 					)";
-		
+		echo $sql;
 		$result = mysql_query($sql, $link);
 
 		$sql = "INSERT INTO 
