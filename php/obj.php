@@ -1,4 +1,7 @@
 <?php
-	echo utf8_encode('Creación');
-	echo utf8_decode('Creación');
+   include("conectar.php"); 
+   include("FichaAPDF.php"); 
+
+   $Ruta = $_GET['Ruta'];
+   $obj = ArmarPDF($Ruta, 1,'F');
 ?>

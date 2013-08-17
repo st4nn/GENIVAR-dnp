@@ -6,6 +6,7 @@ function arranque()
 	$("#btnLogin").button();
 
 	
+	
 	if(localStorage.UsuarioDNP)
 	{window.location.replace("home.html");}
 

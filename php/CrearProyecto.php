@@ -1,6 +1,8 @@
 <?php 
 //'" . utf8_decode($CE_Descripcion) . "',
    require("conectar.php"); 
+   include("FichaAPDF.php"); 
+
 	$link=Conectarse(); 
 
 	$IdUsuario = $_POST['IdUsuario'];
@@ -126,6 +128,8 @@
 				);";
 
 		$result = mysql_query($sql, $link);
+
+		$obj = ArmarPDF("", 1,'F');
 	}
 
 	mysql_close($link);	
