@@ -1,17 +1,17 @@
 <?php 
 include("conectar.php");    
 
- $Id = $_POST['Id'];
+ $Id = addslashes($_POST['Id']);
  
- $User = $_POST['User'];
- $Password = md5($_POST['Password']);
+ $User = addslashes($_POST['User']);
+ $Password = addslashes(md5($_POST['Password']));
  
- $Name = $_POST['Name']; 
- $NickName = $_POST['NickName'];
- $Email = $_POST['Email'];
- $Company = $_POST['Company'];
- $Phone = $_POST['Phone'];
- $IdInitialRoll = $_POST['IdRol'];
+ $Name = addslashes($_POST['Name']); 
+ $NickName = addslashes($_POST['NickName']);
+ $Email = addslashes($_POST['Email']);
+ $Company = addslashes($_POST['Company']);
+ $Phone = addslashes($_POST['Phone']);
+ $IdInitialRoll = addslashes($_POST['IdRol']);
 
  $Fecha = date('Y-m-d'); 
  

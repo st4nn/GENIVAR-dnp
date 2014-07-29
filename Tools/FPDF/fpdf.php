@@ -982,7 +982,7 @@ function SetXY($x, $y)
 
 function Output($name='', $dest='')
 {
-	// Output PDF to some destination
+	 // Output PDF to some destination
 	if($this->state<3)
 		$this->Close();
 	$dest = strtoupper($dest);

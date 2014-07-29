@@ -2,16 +2,15 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
-DROP SCHEMA IF EXISTS `dnp` ;
-CREATE SCHEMA IF NOT EXISTS `dnp` DEFAULT CHARACTER SET latin1 ;
-USE `dnp` ;
+CREATE SCHEMA IF NOT EXISTS `sgigeniv_dnp` DEFAULT CHARACTER SET latin1 ;
+USE `sgigeniv_dnp` ;
 
 -- -----------------------------------------------------
--- Table `dnp`.`Login`
+-- Table `Login`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `dnp`.`Login` ;
+DROP TABLE IF EXISTS `Login` ;
 
-CREATE  TABLE IF NOT EXISTS `dnp`.`Login` (
+CREATE  TABLE IF NOT EXISTS `Login` (
   `IdLogin` INT(11) NOT NULL AUTO_INCREMENT ,
   `Usuario` VARCHAR(50) NOT NULL ,
   `Clave` VARCHAR(50) NOT NULL ,
@@ -24,11 +23,11 @@ DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
--- Table `dnp`.`Departamento`
+-- Table `Departamento`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `dnp`.`Departamento` ;
+DROP TABLE IF EXISTS `Departamento` ;
 
-CREATE  TABLE IF NOT EXISTS `dnp`.`Departamento` (
+CREATE  TABLE IF NOT EXISTS `Departamento` (
   `IdDepartamento` INT(11) NOT NULL AUTO_INCREMENT ,
   `Nombre` VARCHAR(200) NOT NULL ,
   `IdOwn` INT(11) NOT NULL COMMENT 'Id of the User who created' ,
@@ -37,7 +36,7 @@ CREATE  TABLE IF NOT EXISTS `dnp`.`Departamento` (
   INDEX `fk_Departamento_1` (`IdOwn` ASC) ,
   CONSTRAINT `fk_Departamento_1`
     FOREIGN KEY (`IdOwn` )
-    REFERENCES `dnp`.`Login` (`IdLogin` )
+    REFERENCES `Login` (`IdLogin` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -46,11 +45,11 @@ DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
--- Table `dnp`.`Rol`
+-- Table `Rol`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `dnp`.`Rol` ;
+DROP TABLE IF EXISTS `Rol` ;
 
-CREATE  TABLE IF NOT EXISTS `dnp`.`Rol` (
+CREATE  TABLE IF NOT EXISTS `Rol` (
   `idRol` INT(11) NOT NULL AUTO_INCREMENT ,
   `Nombre` VARCHAR(85) NOT NULL ,
   `Descripcion` VARCHAR(255) NULL DEFAULT NULL ,
@@ -62,11 +61,11 @@ DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
--- Table `dnp`.`DatosUsuarios`
+-- Table `DatosUsuarios`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `dnp`.`DatosUsuarios` ;
+DROP TABLE IF EXISTS `DatosUsuarios` ;
 
-CREATE  TABLE IF NOT EXISTS `dnp`.`DatosUsuarios` (
+CREATE  TABLE IF NOT EXISTS `DatosUsuarios` (
   `IdUsersData` INT(11) NOT NULL AUTO_INCREMENT ,
   `Nombre` VARCHAR(200) NOT NULL ,
   `NickName` VARCHAR(80) NOT NULL ,
@@ -80,17 +79,17 @@ CREATE  TABLE IF NOT EXISTS `dnp`.`DatosUsuarios` (
   INDEX `IdInitialRoll` (`IdInitialRoll` ASC) ,
   CONSTRAINT `IdCompany`
     FOREIGN KEY (`IdDepartamento` )
-    REFERENCES `dnp`.`Departamento` (`IdDepartamento` )
+    REFERENCES `Departamento` (`IdDepartamento` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `IdInitialRoll`
     FOREIGN KEY (`IdInitialRoll` )
-    REFERENCES `dnp`.`Rol` (`idRol` )
+    REFERENCES `Rol` (`idRol` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `IdUsersData`
     FOREIGN KEY (`IdUsersData` )
-    REFERENCES `dnp`.`Login` (`IdLogin` )
+    REFERENCES `Login` (`IdLogin` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -99,11 +98,11 @@ DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
--- Table `dnp`.`Funciones`
+-- Table `Funciones`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `dnp`.`Funciones` ;
+DROP TABLE IF EXISTS `Funciones` ;
 
-CREATE  TABLE IF NOT EXISTS `dnp`.`Funciones` (
+CREATE  TABLE IF NOT EXISTS `Funciones` (
   `idFuncion` INT(11) NOT NULL AUTO_INCREMENT ,
   `Nombre` VARCHAR(85) NOT NULL ,
   `Descripcion` VARCHAR(255) NOT NULL ,
@@ -115,11 +114,11 @@ DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
--- Table `dnp`.`Permisos`
+-- Table `Permisos`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `dnp`.`Permisos` ;
+DROP TABLE IF EXISTS `Permisos` ;
 
-CREATE  TABLE IF NOT EXISTS `dnp`.`Permisos` (
+CREATE  TABLE IF NOT EXISTS `Permisos` (
   `IdPermiso` INT(11) NOT NULL AUTO_INCREMENT ,
   `idFuncion` INT(11) NOT NULL ,
   `IdLogin` INT(11) NOT NULL ,
@@ -128,12 +127,12 @@ CREATE  TABLE IF NOT EXISTS `dnp`.`Permisos` (
   INDEX `fk_Function_has_Login_Function1` (`idFuncion` ASC) ,
   CONSTRAINT `fk_Function_has_Login_Function1`
     FOREIGN KEY (`idFuncion` )
-    REFERENCES `dnp`.`Funciones` (`idFuncion` )
+    REFERENCES `Funciones` (`idFuncion` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Function_has_Login_Login1`
     FOREIGN KEY (`IdLogin` )
-    REFERENCES `dnp`.`Login` (`IdLogin` )
+    REFERENCES `Login` (`IdLogin` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -141,11 +140,11 @@ DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
--- Table `dnp`.`RelacionUsuarios`
+-- Table `RelacionUsuarios`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `dnp`.`RelacionUsuarios` ;
+DROP TABLE IF EXISTS `RelacionUsuarios` ;
 
-CREATE  TABLE IF NOT EXISTS `dnp`.`RelacionUsuarios` (
+CREATE  TABLE IF NOT EXISTS `RelacionUsuarios` (
   `idRelationUsers` INT(11) NOT NULL AUTO_INCREMENT ,
   `IdUsuarioHijo` INT(11) NULL DEFAULT NULL ,
   `IdUsuarioPadre` INT(11) NULL DEFAULT NULL ,
@@ -154,12 +153,12 @@ CREATE  TABLE IF NOT EXISTS `dnp`.`RelacionUsuarios` (
   INDEX `fk_RelacionUsuarios_2` (`IdUsuarioPadre` ASC) ,
   CONSTRAINT `fk_RelacionUsuarios_1`
     FOREIGN KEY (`IdUsuarioHijo` )
-    REFERENCES `dnp`.`Login` (`IdLogin` )
+    REFERENCES `Login` (`IdLogin` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_RelacionUsuarios_2`
     FOREIGN KEY (`IdUsuarioPadre` )
-    REFERENCES `dnp`.`Login` (`IdLogin` )
+    REFERENCES `Login` (`IdLogin` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -167,11 +166,11 @@ DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
--- Table `dnp`.`Rol_has_Function`
+-- Table `Rol_has_Function`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `dnp`.`Rol_has_Function` ;
+DROP TABLE IF EXISTS `Rol_has_Function` ;
 
-CREATE  TABLE IF NOT EXISTS `dnp`.`Rol_has_Function` (
+CREATE  TABLE IF NOT EXISTS `Rol_has_Function` (
   `IdRol_has_Function` INT(11) NOT NULL AUTO_INCREMENT ,
   `idRol` INT(11) NOT NULL ,
   `idFuncion` INT(11) NOT NULL ,
@@ -180,12 +179,12 @@ CREATE  TABLE IF NOT EXISTS `dnp`.`Rol_has_Function` (
   INDEX `fk_Roll_has_Function_Roll1` (`idRol` ASC) ,
   CONSTRAINT `fk_Roll_has_Function_Function1`
     FOREIGN KEY (`idFuncion` )
-    REFERENCES `dnp`.`Funciones` (`idFuncion` )
+    REFERENCES `Funciones` (`idFuncion` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Roll_has_Function_Roll1`
     FOREIGN KEY (`idRol` )
-    REFERENCES `dnp`.`Rol` (`idRol` )
+    REFERENCES `Rol` (`idRol` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -193,11 +192,11 @@ DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
--- Table `dnp`.`Rol_has_Rol`
+-- Table `Rol_has_Rol`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `dnp`.`Rol_has_Rol` ;
+DROP TABLE IF EXISTS `Rol_has_Rol` ;
 
-CREATE  TABLE IF NOT EXISTS `dnp`.`Rol_has_Rol` (
+CREATE  TABLE IF NOT EXISTS `Rol_has_Rol` (
   `idRecord` INT(11) NOT NULL AUTO_INCREMENT ,
   `IdRolParent` INT(11) NULL DEFAULT NULL ,
   `IdRolChildren` INT(11) NULL DEFAULT NULL ,
@@ -206,12 +205,12 @@ CREATE  TABLE IF NOT EXISTS `dnp`.`Rol_has_Rol` (
   INDEX `IdRollChildren` (`IdRolChildren` ASC) ,
   CONSTRAINT `IdRollChildren`
     FOREIGN KEY (`IdRolChildren` )
-    REFERENCES `dnp`.`Rol` (`idRol` )
+    REFERENCES `Rol` (`idRol` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `IdRollParent`
     FOREIGN KEY (`IdRolParent` )
-    REFERENCES `dnp`.`Rol` (`idRol` )
+    REFERENCES `Rol` (`idRol` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -220,11 +219,11 @@ DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
--- Table `dnp`.`Transacciones`
+-- Table `Transacciones`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `dnp`.`Transacciones` ;
+DROP TABLE IF EXISTS `Transacciones` ;
 
-CREATE  TABLE IF NOT EXISTS `dnp`.`Transacciones` (
+CREATE  TABLE IF NOT EXISTS `Transacciones` (
   `idUsersTransactions` INT(11) NOT NULL AUTO_INCREMENT ,
   `IdUsuario` INT(11) NOT NULL ,
   `IdUsuarioMaestro` INT(11) NOT NULL ,
@@ -235,12 +234,12 @@ CREATE  TABLE IF NOT EXISTS `dnp`.`Transacciones` (
   INDEX `fk_Transacciones_2` (`IdUsuarioMaestro` ASC) ,
   CONSTRAINT `fk_Transacciones_1`
     FOREIGN KEY (`IdUsuario` )
-    REFERENCES `dnp`.`Login` (`IdLogin` )
+    REFERENCES `Login` (`IdLogin` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Transacciones_2`
     FOREIGN KEY (`IdUsuarioMaestro` )
-    REFERENCES `dnp`.`Login` (`IdLogin` )
+    REFERENCES `Login` (`IdLogin` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -249,11 +248,11 @@ DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
--- Table `dnp`.`Sector`
+-- Table `Sector`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `dnp`.`Sector` ;
+DROP TABLE IF EXISTS `Sector` ;
 
-CREATE  TABLE IF NOT EXISTS `dnp`.`Sector` (
+CREATE  TABLE IF NOT EXISTS `Sector` (
   `idSector` INT NOT NULL AUTO_INCREMENT ,
   `Nombre` VARCHAR(255) NOT NULL ,
   PRIMARY KEY (`idSector`) )
@@ -261,24 +260,24 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `dnp`.`Proyectos`
+-- Table `Proyectos`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `dnp`.`Proyectos` ;
+DROP TABLE IF EXISTS `Proyectos` ;
 
-CREATE  TABLE IF NOT EXISTS `dnp`.`Proyectos` (
+CREATE  TABLE IF NOT EXISTS `Proyectos` (
   `IdProyecto` INT NOT NULL AUTO_INCREMENT ,
-  `FichaNum` INT(11) NOT NULL ,
+  `FichaNum` VARCHAR(18) NOT NULL ,
   `Nombre` VARCHAR(255) NULL ,
   PRIMARY KEY (`IdProyecto`) )
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `dnp`.`ProyectoDatos`
+-- Table `ProyectoDatos`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `dnp`.`ProyectoDatos` ;
+DROP TABLE IF EXISTS `ProyectoDatos` ;
 
-CREATE  TABLE IF NOT EXISTS `dnp`.`ProyectoDatos` (
+CREATE  TABLE IF NOT EXISTS `ProyectoDatos` (
   `IdProyecto` INT NOT NULL ,
   `IdSector` INT(11) NOT NULL ,
   `FechaInicio` DATE NULL ,
@@ -293,23 +292,23 @@ CREATE  TABLE IF NOT EXISTS `dnp`.`ProyectoDatos` (
   INDEX `fk_Proyecto_Datos_1` (`IdSector` ASC) ,
   CONSTRAINT `fk_Proyecto_Datos_Proyectos1`
     FOREIGN KEY (`IdProyecto` )
-    REFERENCES `dnp`.`Proyectos` (`IdProyecto` )
+    REFERENCES `Proyectos` (`IdProyecto` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Proyecto_Datos_1`
     FOREIGN KEY (`IdSector` )
-    REFERENCES `dnp`.`Sector` (`idSector` )
+    REFERENCES `Sector` (`idSector` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `dnp`.`Login_has_Proyectos`
+-- Table `Login_has_Proyectos`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `dnp`.`Login_has_Proyectos` ;
+DROP TABLE IF EXISTS `Login_has_Proyectos` ;
 
-CREATE  TABLE IF NOT EXISTS `dnp`.`Login_has_Proyectos` (
+CREATE  TABLE IF NOT EXISTS `Login_has_Proyectos` (
   `Login_IdLogin` INT(11) NOT NULL ,
   `Proyectos_IdProyecto` INT NOT NULL ,
   PRIMARY KEY (`Login_IdLogin`, `Proyectos_IdProyecto`) ,
@@ -317,12 +316,12 @@ CREATE  TABLE IF NOT EXISTS `dnp`.`Login_has_Proyectos` (
   INDEX `fk_Login_has_Proyectos_Login1` (`Login_IdLogin` ASC) ,
   CONSTRAINT `fk_Login_has_Proyectos_Login1`
     FOREIGN KEY (`Login_IdLogin` )
-    REFERENCES `dnp`.`Login` (`IdLogin` )
+    REFERENCES `Login` (`IdLogin` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Login_has_Proyectos_Proyectos1`
     FOREIGN KEY (`Proyectos_IdProyecto` )
-    REFERENCES `dnp`.`Proyectos` (`IdProyecto` )
+    REFERENCES `Proyectos` (`IdProyecto` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -330,18 +329,18 @@ DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
--- Table `dnp`.`Descripcion`
+-- Table `Descripcion`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `dnp`.`Descripcion` ;
+DROP TABLE IF EXISTS `Descripcion` ;
 
-CREATE  TABLE IF NOT EXISTS `dnp`.`Descripcion` (
+CREATE  TABLE IF NOT EXISTS `Descripcion` (
   `IdProyecto` INT NOT NULL ,
   `ObjetivoGeneral` LONGTEXT NULL ,
   `ObjetivosEspecificos` LONGTEXT NULL ,
   `Alcance` LONGTEXT NULL ,
   `Productos` LONGTEXT NULL ,
   `Resultados` LONGTEXT NULL ,
-  `Inversion` DOUBLE NULL ,
+  `Inversion` LONGTEXT NULL ,
   `Herramientas` LONGTEXT NULL ,
   `MejoresPracticas` LONGTEXT NULL ,
   `Observaciones` LONGTEXT NULL ,
@@ -349,7 +348,58 @@ CREATE  TABLE IF NOT EXISTS `dnp`.`Descripcion` (
   INDEX `fk_Descripcion_1` (`IdProyecto` ASC) ,
   CONSTRAINT `fk_Descripcion_1`
     FOREIGN KEY (`IdProyecto` )
-    REFERENCES `dnp`.`Proyectos` (`IdProyecto` )
+    REFERENCES `Proyectos` (`IdProyecto` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Contratos`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Contratos` ;
+
+CREATE  TABLE IF NOT EXISTS `Contratos` (
+  `idContrato` INT NOT NULL AUTO_INCREMENT ,
+  `NumContrato` VARCHAR(45) NULL ,
+  `FechaDeFirma` VARCHAR(45) NULL ,
+  `Contratista` VARCHAR(120) NULL ,
+  `Identificacion` VARCHAR(60) NULL ,
+  `ConfiguracionJuridica` VARCHAR(45) NULL ,
+  `CapacidadDelContratista` VARCHAR(45) NULL ,
+  `ModalidadDelProceso` VARCHAR(45) NULL ,
+  `ClaseDeContrato` VARCHAR(55) NULL ,
+  `ObjetoSuscripcion` LONGTEXT NULL ,
+  `ValorInicial` DOUBLE NULL ,
+  `FechaRegistroPtaInicial` VARCHAR(60) NULL ,
+  `PlazoEjecucionInicial` VARCHAR(45) NULL ,
+  `Dependencia` VARCHAR(100) NULL ,
+  `FechaInicio` VARCHAR(60) NULL ,
+  `FechaTerminacion` VARCHAR(60) NULL ,
+  `BancaMultilateral` VARCHAR(45) NULL ,
+  PRIMARY KEY (`idContrato`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Contratos_has_Proyectos`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Contratos_has_Proyectos` ;
+
+CREATE  TABLE IF NOT EXISTS `Contratos_has_Proyectos` (
+  `Contratos_idContrato` INT NOT NULL ,
+  `Proyectos_IdProyecto` INT NOT NULL ,
+  PRIMARY KEY (`Contratos_idContrato`, `Proyectos_IdProyecto`) ,
+  INDEX `fk_Contratos_has_Proyectos_Proyectos1` (`Proyectos_IdProyecto` ASC) ,
+  INDEX `fk_Contratos_has_Proyectos_Contratos1` (`Contratos_idContrato` ASC) ,
+  CONSTRAINT `fk_Contratos_has_Proyectos_Contratos1`
+    FOREIGN KEY (`Contratos_idContrato` )
+    REFERENCES `Contratos` (`idContrato` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Contratos_has_Proyectos_Proyectos1`
+    FOREIGN KEY (`Proyectos_IdProyecto` )
+    REFERENCES `Proyectos` (`IdProyecto` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -359,48 +409,3 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
--- -----------------------------------------------------
--- Data for table `dnp`.`Login`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `dnp`;
-INSERT INTO `dnp`.`Login` (`IdLogin`, `Usuario`, `Clave`, `Estado`) VALUES (1, 'Admin', '1c7a92ae351d4e21ebdfb897508f59d6', 'Activo');
-
-COMMIT;
-
--- -----------------------------------------------------
--- Data for table `dnp`.`Departamento`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `dnp`;
-INSERT INTO `dnp`.`Departamento` (`IdDepartamento`, `Nombre`, `IdOwn`) VALUES (1, 'Admin', 1);
-
-COMMIT;
-
--- -----------------------------------------------------
--- Data for table `dnp`.`Rol`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `dnp`;
-INSERT INTO `dnp`.`Rol` (`idRol`, `Nombre`, `Descripcion`) VALUES (1, 'Administrador', 'Administrador');
-
-COMMIT;
-
--- -----------------------------------------------------
--- Data for table `dnp`.`DatosUsuarios`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `dnp`;
-INSERT INTO `dnp`.`DatosUsuarios` (`IdUsersData`, `Nombre`, `NickName`, `Correo`, `IdDepartamento`, `IdInitialRoll`, `Telefono`) VALUES (1, 'Admin', 'Administrador', 'joespinosa@cra.com.co', 1, 1, '');
-
-COMMIT;
-
--- -----------------------------------------------------
--- Data for table `dnp`.`Transacciones`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `dnp`;
-INSERT INTO `dnp`.`Transacciones` (`idUsersTransactions`, `IdUsuario`, `IdUsuarioMaestro`, `Operacion`, `Fecha`) VALUES (1, 1, 1, 'Creación Administrador', '2013-08-13 18:22:00');
-
-COMMIT;

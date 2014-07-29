@@ -4,7 +4,7 @@
 	
 	$i = 0;
 	$Index = 0;	
-	$Id = $_POST['Id'];
+	$Id = addslashes($_POST['Id']);
 	
 	class User
 	{

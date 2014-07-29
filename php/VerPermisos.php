@@ -2,7 +2,7 @@
    require("conectar.php"); 
 	$link=Conectarse(); 
 	
-	$Id = $_POST['Id'];
+	$Id = addslashes($_POST['Id']);
 	
 	$sql = "SELECT
 				p.IdPermiso AS 'IdPermission',

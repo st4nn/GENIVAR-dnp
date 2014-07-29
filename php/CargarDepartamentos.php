@@ -15,7 +15,7 @@
 		$Departamentos[$Index] = new Departamento();
 		
 		$Departamentos[$Index]->IdDepartamento = $row['IdDepartamento'];
-		$Departamentos[$Index]->Nombre = $row['Nombre'];
+		$Departamentos[$Index]->Nombre = utf8_encode($row['Nombre']);
 	
 		$Index++;	
 		

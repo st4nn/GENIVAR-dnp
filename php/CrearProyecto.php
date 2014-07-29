@@ -5,38 +5,47 @@
 
 	$link=Conectarse(); 
 
-	$IdUsuario = $_POST['IdUsuario'];
+	$IdUsuario = addslashes(utf8_decode($_POST['IdUsuario']));
 
-	$FichaNum = $_POST['FichaNum'];
-	$Nombre = $_POST['Nombre'];
-	$IdSector = $_POST['IdSector'];
-	$FechaInicio = $_POST['FechaInicio'];
-	$FechaFin = $_POST['FechaFin'];
-	$Entidad = $_POST['Entidad'];
-	$Expediente = $_POST['Expediente'];
-	$Consultora = $_POST['Consultora'];
-	$CostoTotal = $_POST['CostoTotal'];
-	$Fuente = $_POST['Fuente'];
+	$FichaNum = addslashes(utf8_decode($_POST['FichaNum']));
+	$Nombre = addslashes(utf8_decode($_POST['Nombre']));
+	$Contrato = addslashes(utf8_decode($_POST['Contrato']));
+	$Componente = addslashes(utf8_decode($_POST['Componente']));
+	$DefinicionComponente = addslashes(utf8_decode($_POST['DefinicionComponente']));
+	$SubComponente = addslashes(utf8_decode($_POST['Subcomponente']));
+	$Indicador = addslashes(utf8_decode($_POST['Indicador']));
+	$IdSector = addslashes(utf8_decode($_POST['IdSector']));
+	$FechaInicio = addslashes(utf8_decode($_POST['FechaInicio']));
+	$FechaFin = addslashes(utf8_decode($_POST['FechaFin']));
+	$Entidad = addslashes(utf8_decode($_POST['Entidad']));
+	$Expediente = addslashes(utf8_decode($_POST['Expediente']));
+	$Consultora = addslashes(utf8_decode($_POST['Consultora']));
+	$CostoTotal = addslashes(utf8_decode($_POST['CostoTotal']));
+	//$Fuente = addslashes(utf8_decode($_POST['Fuente']));
 	
-	$Des_ObjetivoGeneral = $_POST['Des_ObjetivoGeneral'];
-	$Des_ObjetivoEspecifico = $_POST['Des_ObjetivoEspecifico'];
-	$Des_Alcance = $_POST['Des_Alcance'];
-	$Des_Productos = $_POST['Des_Productos'];
-	$Des_Resultados = $_POST['Des_Resultados'];
-	$Des_Inversion = $_POST['Des_Inversion'];
-	$Des_Herramientas = $_POST['Des_Herramientas'];
-	$Des_MejoresPracticas = $_POST['Des_MejoresPracticas'];
-	$Des_Obsevaciones = $_POST['Des_Obsevaciones'];
+	$Des_ObjetivoGeneral = addslashes(utf8_decode($_POST['Des_ObjetivoGeneral']));
+	$Des_ObjetivoEspecifico = addslashes(utf8_decode($_POST['Des_ObjetivoEspecifico']));
+	$Des_Alcance = addslashes(utf8_decode($_POST['Des_Alcance']));
+	$Des_Actividades = addslashes(utf8_decode($_POST['Des_Actividades']));
+	$Des_Productos = addslashes(utf8_decode($_POST['Des_Productos']));
+	$Des_Resultados = addslashes(utf8_decode($_POST['Des_Resultados']));
+	$Des_Inversion = addslashes(utf8_decode($_POST['Des_Inversion']));
+	$Des_Herramientas = addslashes(utf8_decode($_POST['Des_Herramientas']));
+	$Des_Obsevaciones = addslashes(utf8_decode($_POST['Des_Obsevaciones']));
 		
 	$Fecha = DATE('Y-m-d H:i:s', time());
 	
 	$sql = "INSERT INTO
 				Proyectos
-				(FichaNum, Nombre)
+				(FichaNum, Nombre, Componente, Subcomponente, Indicador, DefinicionComponente)
 			VALUES
 				(
 					'$FichaNum',
-					'$Nombre'
+					'$Nombre',
+					'$Componente',
+					'$SubComponente',
+					'$Indicador',
+					'$DefinicionComponente'
 				)
 				";
 
@@ -68,8 +77,7 @@
 						Entidad,
 						Expediente,
 						Consultora,
-						CostoTotal,
-						Fuente
+						CostoTotal
 					)
 				VALUES
 					(
@@ -80,10 +88,8 @@
 						'$Entidad',
 						'$Expediente',
 						'$Consultora',
-						'$CostoTotal',
-						'$Fuente'
+						'$CostoTotal'
 					)";
-
 		$result = mysql_query($sql, $link);
 
 		$sql = "INSERT INTO
@@ -92,12 +98,12 @@
 							IdProyecto,
 							ObjetivoGeneral,
 							ObjetivosEspecificos,
+							Actividades,
 							Alcance,
 							Productos,
 							Resultados,
 							Inversion,
 							Herramientas,
-							MejoresPracticas,
 							Observaciones
 						)
 				VALUES
@@ -105,17 +111,26 @@
 						'$IdProyecto',
 						'$Des_ObjetivoGeneral',
 						'$Des_ObjetivoEspecifico',
+						'$Des_Actividades',
 						'$Des_Alcance',
 						'$Des_Productos',
 						'$Des_Resultados',
 						'$Des_Inversion',
 						'$Des_Herramientas',
-						'$Des_MejoresPracticas',
 						'$Des_Obsevaciones'
 					)";
-		echo $sql;
 		$result = mysql_query($sql, $link);
 
+		$sql = "INSERT INTO 
+					Contratos_has_Proyectos 
+					(Contratos_idContrato, Proyectos_IdProyecto) 
+				VALUES 
+				(
+					'$Contrato',
+					'$IdProyecto'
+				);";
+		$result = mysql_query($sql, $link);
+		
 		$sql = "INSERT INTO 
 					Transacciones 
 					(IdUsuario, IdUsuarioMaestro, Operacion, Fecha) 
@@ -129,7 +144,7 @@
 
 		$result = mysql_query($sql, $link);
 
-		$obj = ArmarPDF("", 1,'F');
+		$obj = ArmarPDF($Contrato, $IdProyecto,'F');
 	}
 
 	mysql_close($link);	

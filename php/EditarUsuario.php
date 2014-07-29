@@ -1,18 +1,18 @@
 <?php 
    include("conectar.php"); 
 
- $Id = $_POST['Id'];
- $IdOwn = $_POST['IdOwn'];
- $Name = $_POST['Name']; 
- $NickName = $_POST['NickName'];
+ $Id = addslashes($_POST['Id']);
+ $IdOwn = addslashes($_POST['IdOwn']);
+ $Name = addslashes($_POST['Name']); 
+ $NickName = addslashes($_POST['NickName']);
 
- $Email = $_POST['Email'];
-  $IdDepartamento = $_POST['IdDepartamento'];
-  $Phone = $_POST['Phone'];
+ $Email = addslashes($_POST['Email']);
+  $IdDepartamento = addslashes($_POST['IdDepartamento']);
+  $Phone = addslashes($_POST['Phone']);
 
  //$IdRol = $_POST['IdRol'];
 
- $State = $_POST['State']; 
+ $State = addslashes($_POST['State']); 
  
 	$link=Conectarse(); 
 

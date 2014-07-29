@@ -3,8 +3,11 @@ function arranque()
 {
 	$('#labelWelcome').text('Bienvenido');
 	$('#labelWelcomeRoll').text('Rol');
-	$('#lblHome').text('Incio');
+	$('#lblHome').text('Inicio');
+	$('#lblReporte').text('Generar Reporte');
 	$('#lblBuscarFicha').text('Buscar Ficha');
+	$('#lblBuscarContrato').text('Buscar Contrato');
+	$('#lblCrearContrato').text('Crear Contrato');
 	$('#lblCrearFicha').text('Crear Ficha');
 	$('#lblDocumentos').text('Documentos');
 	$('#lblUsers').text('Usuarios');

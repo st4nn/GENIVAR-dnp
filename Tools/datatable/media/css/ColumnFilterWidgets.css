@@ -1,0 +1,5 @@
+.column-filter-widget { float:left; padding: 5px; }
+.column-filter-widget select { display: block; background-color: white; height: 3em; border: none;}
+.column-filter-widgets a.filter-term { padding: 0.3em;display: block; text-decoration: none; padding-left: 10px; font-size: 90%; }
+.column-filter-widgets a.filter-term:hover { text-decoration: line-through !important; }
+.column-filter-widget-selected-terms { clear:left; }

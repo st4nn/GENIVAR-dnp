@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
 	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>DNP</title>
 	
 	<script src="Tools/HTML5/HTML5_enabling_script.js"></script>
@@ -16,19 +17,36 @@
     
 	<script src="Tools/HTML5/daterangepicker.jQuery.js"></script>
 	<script src="Tools/HTML5/date.js"></script>
-	
-	<!--
-	<script src="Tools/datepicker/datepicker.js"></script>
-	<link rel="stylesheet" type="text/css" href="Tools/datepicker/base.css" />
-	<link rel="stylesheet" type="text/css" href="Tools/datepicker/clean.css" />
--->
-	
+
+	<link rel="stylesheet" type="text/css" media="screen" href="Tools/elfinder/css/elfinder.min.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="Tools/elfinder/css/theme.css">
+	<script type="text/javascript" src="Tools/elfinder/js/elfinder.min.js"></script>
+	<script type="text/javascript" src="Tools/elfinder/js/i18n/elfinder.es.js"></script>
+		
 	<script src="js/funciones_home.js"></script>
 
 	<!--elFinder-->
 	<link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui-1.8.16.custom.css">
+
+	<script type="text/javascript" src="Tools/Flotr2/flotr2.min.js"></script>
 	
-	<script src="Tools/jquery.dataTables.js"></script>
+	<link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui-1.8.16.custom.css">
+
+		<style type="text/css" title="currentStyle">
+			@import "Tools/datatable/media/css/demo_page.css";
+			@import "Tools/datatable/media/css/demo_table.css";
+			@import "Tools/datatable/media/css/TableTools.css";
+			@import "Tools/datatable/media/css/TableTools_JUI.css";
+			@import "Tools/datatable/media/css/ColumnFilterWidgets.css";
+			@import "Tools/datatable/media/css/ColVis.css";
+		</style>
+
+	<script src="Tools/datatable/media/js/jquery.dataTables.js"></script>
+	<script src="Tools/datatable/media/js/TableTools.js"></script>
+	<script src="Tools/datatable/media/js/ColumnFilterWidgets.js"></script>
+	<script src="Tools/datatable/media/js/ZeroClipboard.js"></script>
+	<script src="Tools/datatable/media/js/ColVis.js"></script>
+	
 	<script src="Tools/jquery.pstrength-min.1.2.js"></script>
 	<script src="js/lang_es.js"></script>
 	
@@ -49,9 +67,13 @@
 	<article id='SelectedSection'><h4></h4></article>
 </header>
 	<ul id='MainMenu'>
-		<!--<li id='lnkHome'><a id='lblHome' href="#DashBoard"></a></li>-->
+		<li id='lnkHome'><a id='lblHome' href="#DashBoard"></a></li>
+		<li id='lnkReporte'><a id='lblReporte' href="#Reporte"></a></li>
 		<li id='lnkBuscarFicha'><a id='lblBuscarFicha' href="#BuscarFicha" act="" ></a></li>
-		<li id='lnkCrearFicha'><a id='lblCrearFicha' href="#CrearFicha" act="" ></a></li>
+			<li id='lnkCrearFicha'><a id='lblCrearFicha' href="#CrearFicha" act="" ></a></li>
+		<li id='lnkBuscarContrato'><a id='lblBuscarContrato' href="#BuscarContrato" act="" ></a></li>
+			<li id='lnkCrearContrato'><a id='lblCrearContrato' href="#CrearContrato" act="" ></a></li>
+			
 		<li id='lnkUsers'><a id='lblUsers' href="#Users" act="" ></a></li>
 		<br>
 		<li id="lnkLogout"><a id='lblLogout' href='' act="" ></a></li>
@@ -59,14 +81,46 @@
 			Powered by <input type='image' src='css/imagenes/LogoGenivar-mini.png' style="height: 1.5em;width:6em";/>
 		</footer>
 	</ul>
+		<section id="DashBoard">
+
+			<center>
+			<section id="DashBoard_Opciones">
+				<input type="radio" id="rdbGrafica1" name="rdbGrafica" value="1" checked="checked" />
+				<label for="rdbGrafica1">Por Componente</label>
+				
+				<input type="radio" id="rdbGrafica2" name="rdbGrafica" value="2" />
+				<label for="rdbGrafica2">Por Año</label>
+
+				<input type="radio" id="rdbGrafica3" name="rdbGrafica" value="3" />
+				<label for="rdbGrafica3">Por Sector</label>
+
+				<input type="radio" id="rdbGrafica4" name="rdbGrafica" value="4" />
+				<label for="rdbGrafica4">Por SubComponente</label>
+				<!--
+				<input type="radio" id="rdbGrafica5" name="rdbGrafica" value="5" />
+				<label for="rdbGrafica5">Por Indicador</label>
+				-->
+			</section>
+			<br> </br>
+
+			<div id="divGraficas"></div>
+			<div id="divGraficasConvenciones"></div>
+			</center>
+			<!--
+			<div id="FichasPorAnio"></div>
+			<div id="FichasPorSector"></div>
+			<div id="FichasPorSubComponente"></div>
+			<div id="FichasPorIndicador"></div>
+		-->
+		</section>
 		<section id='Users'>
-			<section id='Users_Message' class="ui-state-highlight ui-corner-all">
-								<p>
-									<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
-									<strong>Hey!</strong> 
-									<texto>.</texto>
-								</p>
-							</section>
+				<section id='Users_Message' class="ui-state-highlight ui-corner-all">
+					<p>
+						<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+						<strong>Hey!</strong> 
+						<texto>.</texto>
+					</p>
+				</section>
 			<section id='MyAccount_Options_CreatingUsers'>
 					<form id='CreatingUsersCreate'>
 							<div id='CreatingUsers_Create' class="ui-state-highlight ui-corner-all">
@@ -209,10 +263,16 @@
 		<section id="BuscarFicha">
 			<form id="frmBuscarFicha">
 				<label class='labelForm' for='txtBuscarFicha_Numero'>Numero de Ficha: </label>
-				<input class='inputForm' type='number' id='txtBuscarFicha_Numero' style="width:30%; height: 1em"></input>
+				<input class='inputForm' type='text' id='txtBuscarFicha_Numero' ></input>
 
 				<label class='labelForm' for='txtBuscarFicha_Nombre'>Proyecto: </label>
 				<input class='inputForm' type='text' id='txtBuscarFicha_Nombre' ></input>
+
+				<label class='labelForm' for='txtBuscarFicha_Componente'>Componente: </label>
+				<select class='inputForm' id='txtBuscarFicha_Componente'>
+					<option value="1">1</option>
+					<option value="2">2</option>
+				</select>
 
 				<label class='labelForm' for='txtBuscarFicha_Sector'>Sector de Actividad Económica: </label>
 				<select class='inputForm' id='txtBuscarFicha_Sector'></select>
@@ -232,11 +292,19 @@
 				<label class='labelForm' for='txtBuscarFicha_Consultora'>Persona/Entidad Consultora: </label>
 				<input class='inputForm' type='text' id='txtBuscarFicha_Consultora'></input>
 
-				<label class='labelForm' for='txtBuscarFicha_Costo'>Costo Total del Proyecto: </label>
-				<input class='inputForm' type='text' id='txtBuscarFicha_Costo' placeholder="Col $"></input>
-
+				<br />
+				<label for='txtBuscarFicha_Costo'>Costo Total del Proyecto: </label>
+				
+				<br />
+				<label class='labelForm' for='txtBuscarFicha_Costo_Desde'>Desde: </label>
+				<input class='inputForm' type='text' id='txtBuscarFicha_Costo_Desde' placeholder="Col $"></input>
+				<label class='labelForm' for='txtBuscarFicha_Costo_Hasta'>Hasta: </label>
+				<input class='inputForm' type='text' id='txtBuscarFicha_Costo_Hasta' placeholder="Col $"></input>
+				<br />
+				<!--
 				<label class='labelForm' for='txtBuscarFicha_Fuente'>Fuente de Financiamiento: </label>
 				<input class='inputForm' type='text' id='txtBuscarFicha_Fuente' placeholder="Préstamo BID-2079/OC-CO"></input>				
+			-->
 
 				<label class='labelForm' for='txtBuscarFicha_Descripcion'>Descripción: </label>
 				<textarea class='inputForm' type='text' id='txtBuscarFicha_Descripcion' ></textarea>				
@@ -256,16 +324,21 @@
 						<texto>La compañía ha sido creada.</texto>
 					</p>
 				</div>
+				<div id="BorrarFicha">
+					<article>Esta seguro que desea borrar la Ficha <span></span></article>
+				</div>
 				<table id='tblBuscarFicha'>
 				  <thead>
 					<tr>
-						<th>Ficha Num</th>
+						<th>Contrato</th>
 						<th>Proyecto</th>
 						<th>Fecha Inicio</th>
 						<th>Fecha Fin</th>
 						<th>Número de Expediente</th>
 						<th>Persona/Entidad Consultora</th>
 						<th>Mas Info</th>
+						<th>Documento</th>
+						<th>Eliminar</th>
 					</tr>
 				  </thead>
 				  <tbody></tbody>
@@ -274,29 +347,46 @@
 		</section>
 		<section id="CrearFicha">
 			<form id="frmCrearFicha">
-				<div id='alertCrearFicha' class="ui-state-highlight ui-corner-all">
-					<p>
-						<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em"></span>
-						<strong>Hey!</strong> 
-						<texto>La compañía ha sido creada.</texto>
-					</p>
+				<center>
+				<div id="rdbCrearFicha_Componente">
+					<input type="radio" id="rdbComponente1" name="rdbComponente" value="1" /><label for="rdbComponente1">Componente 1</label>
+					<input type="radio" id="rdbComponente2" name="rdbComponente" value="2" /><label for="rdbComponente2">
+					Componente 2</label>
+					<input type="radio" id="rdbComponente3" name="rdbComponente" value="3" /><label for="rdbComponente3">
+					Componente 3</label>
 				</div>
+				</center>
+				<div id="CrearFichaSubcomponentes">
+					<label class='labelForm' for='txtCrearFicha_ComponenteDefinicion'>Definición del Componente: </label>
+					<select class='inputForm' id='txtCrearFicha_ComponenteDefinicion'></select>
+
+					<label class='labelForm' for='txtCrearFicha_Sector'>Sector de Actividad Económica: </label>
+					<select class='inputForm' id='txtCrearFicha_Sector'></select>
+					<section id='CrearFicha_Sector'>
+						<center>
+							<label class='labelForm' for='txtCreatingUsersCreate_CompanyOther'>Nombre Nuevo Sector: </label><input class='inputForm' type='text' id='txtCreatingUsersCreate_CompanyOther'/>
+							</br>
+							<button class='ui-button-primary ui-button ui-widget ui-corner-all' id='btnCrearFicha_SectorCrear'>Crear</button>
+							<button class='ui-button-error ui-button ui-widget ui-corner-all' id = 'btnCrearFicha_SectorCancelar'>Cancelar</button>
+						</center>
+					</section>
+					<div id="CrearFichaSubcomponentes_">
+						<label class='labelForm' for='txtCrearFicha_Indicador'>Indicador: </label>
+						<select class='inputForm' id='txtCrearFicha_Indicador' ></select>
+
+						<label class='labelForm' for='txtCrearFicha_Subcomponente'>Subcomponente: </label>
+						<select class='inputForm' id='txtCrearFicha_Subcomponente'></select>
+					</div>
+				</div>
+
 				<label class='labelForm' for='txtCrearFicha_Numero'>Numero de Ficha: </label>
-				<input class='inputForm' type='number' id='txtCrearFicha_Numero' style="width:30%; height: 1em" required></input>
+				<input class='inputForm' type='text' id='txtCrearFicha_Numero'  required></input>
+
+				<label class='labelForm' for='txtCrearFicha_Contrato'>Contrato a Asignar: </label>
+				<input class='inputForm' type='text' idContrato="0" id='txtCrearFicha_Contrato'  required></input>
 
 				<label class='labelForm' for='txtCrearFicha_Nombre'>Proyecto: </label>
 				<input class='inputForm' type='text' id='txtCrearFicha_Nombre' required></input>
-
-				<label class='labelForm' for='txtCrearFicha_Sector'>Sector de Actividad Económica: </label>
-				<select class='inputForm' id='txtCrearFicha_Sector'></select>
-				<section id='CrearFicha_Sector'>
-					<center>
-						<label class='labelForm' for='txtCreatingUsersCreate_CompanyOther'>Nombre Nuevo Sector: </label><input class='inputForm' type='text' id='txtCreatingUsersCreate_CompanyOther'/>
-						</br>
-						<button class='ui-button-primary ui-button ui-widget ui-corner-all' id='btnCrearFicha_SectorCrear'>Crear</button>
-						<button class='ui-button-error ui-button ui-widget ui-corner-all' id = 'btnCrearFicha_SectorCancelar'>Cancelar</button>
-					</center>
-				</section>
 
 				<label class='labelForm' for='txtCrearFicha_FechaIni'>Fecha de Inicio: </label>
 				<input class='inputForm' type='text' id='txtCrearFicha_FechaIni' required></input>
@@ -314,21 +404,21 @@
 				<input class='inputForm' type='text' id='txtCrearFicha_Consultora' required></input>
 
 				<label class='labelForm' for='txtCrearFicha_Costo'>Costo Total del Proyecto: </label>
-				<input class='inputForm' type='numer' id='txtCrearFicha_Costo' placeholder="Col $" required></input>
-
-				<label class='labelForm' for='txtCrearFicha_Fuente'>Fuente de Financiamiento: </label>
-				<input class='inputForm' type='text' id='txtCrearFicha_Fuente' placeholder="Préstamo BID-2079/OC-CO" required></input>				
-
+				<input class='inputForm' type='number' id='txtCrearFicha_Costo' placeholder="Col $" required></input>
+				
 				<div id='CrearFicha_Descripcion'>
 					<div class="CrearFicha_Descripcion_Menu">
-						<article class="title" act="" Caja="CrearFicha_Descripcion_Objetivos"><strong>Objetivos</strong></article>
+						<article id="artCrearFicha_Descripcion_Objetivos" class="title" act="" Caja="CrearFicha_Descripcion_Objetivos"><strong>Objetivos</strong></article>
+						<article id="artCrearFicha_Descripcion_Actividades" class="title" act="" Caja="CrearFicha_Descripcion_Actividades"><strong>Actividades</strong></article>
 			  			<article class="title" act="" Caja="CrearFicha_Descripcion_Alcance"><strong>Alcance</strong></article>
 						<article class="title" act="" Caja="CrearFicha_Descripcion_Productos"><strong>Productos</strong></article>
 						<article class="title" act="" Caja="CrearFicha_Descripcion_Resultados"><strong>Resultados:</strong></article>
 						<article class="title" act="" Caja="CrearFicha_Descripcion_Inversion"><strong>Inversión:</strong></article>
 						<article class="title" act="" Caja="CrearFicha_Descripcion_Herramientas"><strong>Herramientas/Procedimientos:</strong></article>
+						<!--
 						<article class="title" act="" Caja="CrearFicha_Descripcion_MejoresPracticas"><strong>Mejores Practicas:</strong></article>
-						<article class="title" act="" Caja="CrearFicha_Descripcion_Observaciones"><strong>Observaciones:</strong></article>
+					-->
+						<article id="artCrearFicha_Descripcion_Observaciones" class="title" act="" Caja="CrearFicha_Descripcion_Observaciones"><strong>Observaciones:</strong></article>
 					</div>
 				  	<div class="CrearFicha_Descripcion_Contenido">
 			  			<div class="content" id="CrearFicha_Descripcion_Objetivos">
@@ -342,6 +432,9 @@
 									<textarea style="height:11em;width:47%;"type='text' id='txtCrearFicha_Descripcion_ObjetivoEspecifico' placeholder="Objetivos Específicos"></textarea>
 					    		</td>
 					    	</table>
+				    	</div>
+				    	<div class="content" id="CrearFicha_Descripcion_Actividades">
+							<textarea style="height:11em;width:97%;"type='text' id='txtCrearFicha_Descripcion_Actividades'  placeholder="Actividades"></textarea>
 				    	</div>
 			  			<div class="content" id="CrearFicha_Descripcion_Alcance">
 							<textarea style="height:11em;width:97%;"type='text' id='txtCrearFicha_Descripcion_Alcance'  placeholder="Alcance del Estudio"></textarea>
@@ -362,17 +455,21 @@
 							<textarea style="height:11em;width:97%;"type='text' id='txtCrearFicha_Descripcion_Herramientas' placeholder="Principales Herramientas Metodológicas/Procedimientos Técnicos Utilizados"></textarea>
 				    	</div>
 			  		
-			  			<div class="content" id="CrearFicha_Descripcion_MejoresPracticas">
-							<textarea style="height:11em;width:97%;"type='text' id='txtCrearFicha_Descripcion_MejoresPracticas' placeholder="Mejores Prácticas"></textarea>
-				    	</div>
-			  		
 			  			<div class="content" id="CrearFicha_Descripcion_Observaciones">
 							<textarea style="height:11em;width:97%;"type='text' id='txtCrearFicha_Descripcion_Observaciones' placeholder="Observaciones"></textarea>
 				    	</div>
 			  		</div>
 				</div>
+
 				<br />
 				<center>
+					<div id='alertCrearFicha' class="ui-state-highlight ui-corner-all">
+						<p>
+							<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em"></span>
+							<strong>Hey!</strong> 
+							<texto>La compañía ha sido creada.</texto>
+						</p>
+					</div>
 					<input class='ui-button-success ui-button ui-widget ui-corner-all' type='submit' id='btnCrearFicha_Submit' value='Crear'/>				
 				</center>
 			</form>
@@ -390,22 +487,47 @@
 
 			<form id="frmEditarFicha" IdProyecto="">
 				<h3>Información de Ficha Numero: <span></span></h3>
+
+					<label class='labelForm' idContrato = "0" for='txtEditarFicha_Contrato'>Contrato Asociado: </label>
+					<input class='inputForm' type='text' id='txtEditarFicha_Contrato'  required></input>
+
+					<label class='labelForm' for='txtEditarFicha_Sector'>Sector de Actividad Económica: </label>
+					<select class='inputForm' id='txtEditarFicha_Sector'></select>
+					<section id='EditarFicha_Sector'>
+						<center>
+							<label class='labelForm' for='txtEditarFicha_Sector_Otro'>Nombre Nuevo Sector: </label><input class='inputForm' type='text' id='txtEditarFicha_Sector_Otro'/>
+							</br>
+							<button class='ui-button-primary ui-button ui-widget ui-corner-all' id='btnEditarFicha_SectorCrear'>Crear</button>
+							<button class='ui-button-error ui-button ui-widget ui-corner-all' id = 'btnEditarFicha_SectorCancelar'>Cancelar</button>
+						</center>
+					</section>
+
 				<label class='labelForm' for='txtEditarFicha_Numero'>Numero de Ficha: </label>
-				<input class='inputForm' type='number' id='txtEditarFicha_Numero' style="width:30%; height: 1em" required></input>
+				<input class='inputForm' type='text' id='txtEditarFicha_Numero'  required></input>
 
 				<label class='labelForm' for='txtEditarFicha_Nombre'>Proyecto: </label>
 				<input class='inputForm' type='text' id='txtEditarFicha_Nombre' required></input>
 
-				<label class='labelForm' for='txtEditarFicha_Sector'>Sector de Actividad Económica: </label>
-				<select class='inputForm' type='text' id='txtEditarFicha_Sector' required></select>
-				<section id='EditarFicha_Sector'>
-					<center>
-						<label class='labelForm' for='txtEditarFicha_Sector_Otro'>Nombre Nuevo Sector: </label><input class='inputForm' type='text' id='txtEditarFicha_Sector_Otro'/>
-						</br>
-						<button class='ui-button-primary ui-button ui-widget ui-corner-all' id='btnEditarFicha_SectorCrear'>Crear</button>
-						<button class='ui-button-error ui-button ui-widget ui-corner-all' id = 'btnEditarFicha_SectorCancelar'>Cancelar</button>
-					</center>
+				<label class='labelForm' for='txtEditarFicha_Componente'>Componente: </label>
+				<select class='inputForm' type='text' id='txtEditarFicha_Componente' >
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+				</select>
+
+				<label class='labelForm' for='txtEditarFicha_DefinicionComponente'>Definición Componente: </label>
+					<select class='inputForm' id='txtEditarFicha_DefinicionComponente' ></select>
+				<section id="EditarFichaSubcomponentes_">
+					<label class='labelForm' for='txtEditarFicha_Subcomponente'>Subcomponente: </label>
+					<select class='inputForm' id='txtEditarFicha_Subcomponente' >
+					</select>
+
+					<label class='labelForm' for='txtEditarFicha_Indicador'>Indicador: </label>
+					<select class='inputForm' id='txtEditarFicha_Indicador' >
+					</select>
 				</section>
+
+
 
 				<label class='labelForm' for='txtEditarFicha_FechaIni'>Fecha de Inicio: </label>
 				<input class='inputForm' type='text' id='txtEditarFicha_FechaIni' required></input>
@@ -423,27 +545,176 @@
 				<input class='inputForm' type='text' id='txtEditarFicha_Consultora' required></input>
 
 				<label class='labelForm' for='txtEditarFicha_Costo'>Costo Total del Proyecto: </label>
-				<input class='inputForm' type='numer' id='txtEditarFicha_Costo' placeholder="Col $" required></input>
-
-				<label class='labelForm' for='txtEditarFicha_Fuente'>Fuente de Financiamiento: </label>
-				<input class='inputForm' type='text' id='txtEditarFicha_Fuente' placeholder="Préstamo BID-2079/OC-CO" required></input>				
+				<input class='inputForm' type='number' id='txtEditarFicha_Costo' placeholder="Col $" required></input>
 				
 				<center>
 					<input class='ui-button-primary ui-button ui-widget ui-corner-all' type='submit' id='btnEditarFicha_Submit' value='Guardar'/>				
 				</center>
 
 					<div id="EditarFicha_Descripcion_Menu" IdProyecto="" IdFicha="">
-						<article class="EditarFicha_Menu_Item" Descripcion="Objetivo General" <strong>Objetivos:</strong></article>
+						<article id="artEditarFicha_Menu_Item_Objetivos" class="EditarFicha_Menu_Item" Descripcion="Objetivo General" <strong>Objetivos:</strong></article>
 			 			<article class="EditarFicha_Menu_Item" Descripcion="Alcance del Estudio" <strong>Alcance:</strong></article>
 						<article class="EditarFicha_Menu_Item" Descripcion="Productos del Estudio" <strong>Productos:</strong></article>
 						<article class="EditarFicha_Menu_Item" Descripcion="Principales Resultados" <strong>Resultados:</strong></article>
 						<article class="EditarFicha_Menu_Item" Descripcion="Monto de Inversión Generado" <strong>Inversión:</strong></article>
 						<article class="EditarFicha_Menu_Item" Descripcion="Principales Herramientas Metodológicas/Procedimientos Técnicos Utilizados" <strong>Herramientas/Procedimientos:</strong></article>
+						<!--
 						<article class="EditarFicha_Menu_Item" Descripcion="Mejores Prácticas" <strong>Mejores Practicas:</strong></article>
-						<article class="EditarFicha_Menu_Item" Descripcion="Observaciones" <strong>Observaciones:</strong></article>
+						-->
+						<article id="artEditarFicha_Menu_Item_Observaciones" class="EditarFicha_Menu_Item" Descripcion="Observaciones" <strong>Observaciones:</strong></article>
 					</div>
 					<div id="EditarFicha_Descripcion"></div>
 				
+			</form>
+		</section>
+			
+		<section id="BuscarContrato">
+			<form id="frmBuscarContrato">
+				<label class='labelForm' for='txtBuscarContrato_Parametro'>Buscar Por: </label>
+				<select class='inputForm' id='txtBuscarContrato_Parametro'>
+					<option value="NumContrato">Numero de Contrato</option>
+					<option value="FechaDeFirma">Fecha de Firma</option>
+					<option value="Contratista">Contratista</option>
+					<option value="Identificacion">Identificación</option>
+					<option value="ConfiguracionJuridica">Configuración Juridica</option>
+					<option value="CapacidadDelContratista">Capacidad del Contratista</option>
+					<option value="ModalidadDelProceso">Modalidad del Proceso</option>
+					<option value="ClaseDeContrato">Clase de Contrato</option>
+					<option value="ObjetoSuscripcion">Objeto Suscripción</option>
+					<option value="ValorInicial">Valor Inicial</option>
+					<option value="FechaRegistroPtaInicial">Fecha Registro Pta Inicial</option>
+					<option value="PlazoEjecucionInicial">Plazo Ejecución Inicial</option>
+					<option value="Dependencia">Dependencia</option>
+					<option value="FechaInicio">Fecha de Inicio</option>
+					<option value="FechaTerminacion">Fecha de Terminación</option>
+					<option value="BancaMultilateral">Banca Multilateral</option>
+				</select>
+
+				<label class='labelForm' for='txtBuscarContrato_Valor'>Valor a Buscar: </label>
+				<textarea class='inputForm' id='txtBuscarContrato_Valor' placeholder="Numero de Contrato" required></textarea>
+
+				<center>
+						<input class='ui-button-success ui-button ui-widget ui-corner-all' type='submit' id='btnMyAccount_Save' value='Buscar'/>
+				</center>
+			</form>
+
+			<section id="frmBuscarContrato_Resultados">
+				<table id='tblBuscarContrato'>
+				  <thead>
+					<tr>
+						<th>Numero de Contrato</th>
+						<th>Contratista</th>
+						<th>Valor Inicial</th>
+						<th>Fecha Inicio</th>
+						<th>Fecha Terminación</th>
+						<th>Mas Info</th>
+					</tr>
+				  </thead>
+				  <tbody></tbody>
+				</table>
+
+				<section id="frmBuscarContrato_Resultados_MasInfo">
+					<button id="frmBuscarContrato_Resultados_MasInfo_Cerrar" title='Cerrar' class='ui-button-default ui-button ui-widget ui-corner-all' style="position:absolute;float:left;"><strong><span class='ui-icon ui-icon-circle-close'></span></strong></button>
+					<br />
+					<table id='tblBuscarContrato_Info_1'>
+					  <thead>
+						<tr>
+							<th>Numero de Contrato</th>
+							<th>Fecha de Firma</th>
+							<th>Contratista</th>
+						</tr>
+					  </thead>
+					  <tbody></tbody>
+					</table>
+
+
+					<table id='tblBuscarContrato_Info_2'>
+					  <thead>
+						<tr>
+							<th>Objeto Suscripción</th>
+							<th>Valor Inicial</th>
+							<th>Fecha Registro Pta Inicial</th>
+							<th>Plazo Ejecución Inicial</th>
+						</tr>
+					  </thead>
+					  <tbody></tbody>
+					</table>
+
+					<table id='tblBuscarContrato_Info_3'>
+					  <thead>
+						<tr>
+							<th>Fecha Inicio</th>
+							<th>Fecha Terminación</th>
+						</tr>
+					  </thead>
+					  <tbody></tbody>
+					</table>
+					<!--
+					<form id="frmAsignarFicha">
+						<label class='labelForm' for='txtBuscarContrato_AsignarFicha'>Ficha Asignada: </label>
+						<select class='inputForm' id='txtBuscarContrato_AsignarFicha'></select>
+
+						<center>
+							<input class='ui-button-success ui-button ui-widget ui-corner-all' type='submit' id='btnCrearFicha_Submit' value='Guardar'/>				
+						</center>
+
+						
+					</form>
+				-->
+					<div id='elFinder'></div>
+				</section>
+			</section>
+		</section>
+		<section id='CrearContrato'>
+			<form id="frmCrearContrato">
+				
+				<label class='labelForm' for='txtCrearContrato_Numero'>Numero de Contrato: </label>
+				<input class='inputForm' type='text' id='txtCrearContrato_Numero' style="width:30%; height: 1em" required></input>
+
+				<label class='labelForm' for='txtCrearContrato_FechaFirma'>Fecha de Firma: </label>
+				<input class='inputForm' type='text' id='txtCrearContrato_FechaFirma' required></input>
+
+				<label class='labelForm' for='txtCrearContrato_Contratista'>Contratista: </label>
+				<input class='inputForm' type='text' id='txtCrearContrato_Contratista' required></input>
+
+				<label class='labelForm' for='txtCrearContrato_Modalidad'>Modalidad del Proceso: </label>
+				<input class='inputForm' type='text' id='txtCrearContrato_Modalidad' required></input>
+
+				<label class='labelForm' for='txtCrearContrato_Objeto'>Objeto Suscripción: </label>
+				<textarea class='inputForm' id='txtCrearContrato_Objeto' required></textarea>
+
+				<label class='labelForm' for='txtCrearContrato_Valor'>Valor Inicial: </label>
+				<input class='inputForm' type='text' id='txtCrearContrato_Valor' required></input>			
+		
+				<label class='labelForm' for='txtCrearContrato_Registro'>Fecha Registro Pta Inicial: </label>
+				<input class='inputForm' type='text' id='txtCrearContrato_Registro' required></input>
+
+
+				<label class='labelForm' for='txtCrearContrato_Plazo'>Plazo Ejecución Inicial: </label>
+				<input class='inputForm' type='text' id='txtCrearContrato_Plazo' required></input>
+
+				<label class='labelForm' for='txtCrearContrato_FInicio'>Fecha de Inicio: </label>
+				<input class='inputForm' type='text' id='txtCrearContrato_FInicio' required></input>
+
+
+				<label class='labelForm' for='txtCrearContrato_FTerminacion'>Fecha Terminación: </label>
+				<input class='inputForm' type='text' id='txtCrearContrato_FTerminacion' required></input>
+
+				<br />
+				<center>
+					<div id='alertCrearContrato' class="ui-state-highlight ui-corner-all">
+						<p>
+							<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em"></span>
+							<strong>Hey!</strong> 
+							<texto>La compañía ha sido creada.</texto>
+						</p>
+					</div>
+					<input class='ui-button-success ui-button ui-widget ui-corner-all' type='submit' id='btnCrearFicha_Submit' value='Crear'/>				
+				</center>
+				<center>
+					<input class='ui-button-success ui-button ui-widget ui-corner-all' type='submit' id='btnCrearFicha_Submit' value='Crear'/>				
+				</center>
+
 			</form>
 		</section>
 </body>

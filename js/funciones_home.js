@@ -9,17 +9,42 @@ function arranque()
 	if(!localStorage.UsuarioDNP)
 	{CerrarSesion();}
 
+	$("#DashBoard_Opciones").buttonset();
+
+	$("#DashBoard_Opciones input").on("click", DashBoard_Opciones_input_click);
+
 	CargarUsuario();
 	CargarDepartamentos();
 	CargarSectores();
+
+	$('#tblBuscarFicha').dataTable( {
+			"sDom": 'T<"clear">lfrtip',
+			"aaSorting": [[ 2, "asc" ]],
+			"oTableTools": 
+				{
+			"sSwfPath": "Tools/datatable/media/swf/copy_csv_xls_pdf.swf",
+			"aButtons": [
+                "print",
+                {
+                    "sExtends":    "collection",
+                    "sButtonText": "Guardar",
+                    "aButtons":    [ "csv", "xls", "pdf" ]
+                }
+            			]
+				},
+				"oColumnFilterWidgets": 
+				{
+			"sSeparator": "\\s*/+\\s*"
+				}
+		} );
 	
 
-	$('#txtBuscarFicha_FechaIni, #txtBuscarFicha_FechaFin, #txtCrearFicha_FechaIni, #txtCrearFicha_FechaFin').datepicker();
-	$('#txtBuscarFicha_FechaIni, #txtBuscarFicha_FechaFin, #txtCrearFicha_FechaIni, #txtCrearFicha_FechaFin').on('change', DashBoard_RangeBx_Change);
+	$('#txtBuscarFicha_FechaIni, #txtBuscarFicha_FechaFin, #txtCrearFicha_FechaIni, #txtCrearFicha_FechaFin, #txtCrearContrato_FechaFirma, #txtCrearContrato_Registro, #txtCrearContrato_FInicio, #txtCrearContrato_FTerminacion').datepicker();
+
+	$('#txtBuscarFicha_FechaIni, #txtBuscarFicha_FechaFin, #txtCrearFicha_FechaIni, #txtCrearFicha_FechaFin, #txtCrearContrato_FechaFirma, #txtCrearContrato_Registro, #txtCrearContrato_FInicio, #txtCrearContrato_FTerminacion').on('change', DashBoard_RangeBx_Change);
 
 	$('#lnkLogout').on('click', CerrarSesion);
 	
-	//$("#lnkHome").on('click', function(){ Seccion("#DashBoard"); $("#SelectedSection h4").text("Inicio");})
 	$("#lnkUsers").on('click', function(){ Seccion("#Users"); $("#SelectedSection h4").text("Usuarios");})
 	
 	$("#tableMyUsersRefresh").on("click", CargarUsuariosPropios);
@@ -65,8 +90,13 @@ function arranque()
 		});
 	$("#CreatingUsersCreate").on("submit", CreatingUsersCreate_submit);
 
-	$("#lnkBuscarFicha").on('click', function(){ Seccion("#BuscarFicha"); $("#SelectedSection h4").text("Buscar Ficha");})
-	$("#lnkCrearFicha").on('click', function(){ Seccion("#CrearFicha"); $("#SelectedSection h4").text("Crear Ficha");})
+	$("#lnkHome").on('click', function(){ Seccion("#DashBoard"); $("#SelectedSection h4").text("Inicio");CargarDashboard();});
+	$("#lnkReporte").on('click', function(){ abrirPopup("php/GenerarReporte.php");});
+	$("#lnkBuscarFicha").on('click', function(){ Seccion("#BuscarFicha"); $("#SelectedSection h4").text("Buscar Ficha");});
+	$("#lnkBuscarContrato").on('click', function(){ Seccion("#BuscarContrato"); $("#SelectedSection h4").text("Buscar Contrato");});
+	$("#lnkCrearContrato").on('click', function(){ Seccion("#CrearContrato"); $("#SelectedSection h4").text("Crear Contrato");});
+	$("#lnkCrearFicha").on('click', function(){ Seccion("#CrearFicha"); $("#SelectedSection h4").text("Crear Ficha"); CargarContratosCBO("txtCrearFicha_Contrato");});
+
 	
 	$("#frmCrearFicha").on("submit", frmCrearFicha_Submit);
     
@@ -107,6 +137,7 @@ function arranque()
 
  	$("#CrearFicha_Descripcion .title").on("click", CrearFicha_Descripcion);
     $("#frmBuscarFicha").on("submit", frmBuscarFicha_Submit);
+    $("#frmBuscarContrato").on("submit", frmBuscarContrato_Submit);
 
     $("#btnBuscarFicha_OcultarTabla").on("click", function()
     {
@@ -122,12 +153,91 @@ function arranque()
     	);
 
     $("#BuscarFicha_Resultados .btnBuscarFicha_MasInfo").live("click", btnBuscarFicha_MasInfo_Click);
+    $("#BuscarFicha_Resultados .btnBuscarFicha_Documento").live("click", btnBuscarFicha_Documento_Click);
+    $("#BuscarFicha_Resultados .btnBuscarFicha_Eliminar").live("click", btnBuscarFicha_Eliminar_Click);
+    $("#tblBuscarContrato .btnBuscarContrato_MasInfo").live("click", btnBuscarContrato_MasInfo_Click);
 
     $("#EditarFicha_Descripcion_Menu article").on("click", EditarFicha_Descripcion_Menu_article_Click);
 
     $("#frmEditarFicha").on("submit", frmEditarFicha_Submit);
 
-    $("#txtCrearFicha_Sector").on("change", function(){cboCompanyCreate_Change("CrearFicha_Sector", "txtCrearFicha_Sector");});
+    $("#txtCrearFicha_Sector").on("change", function()
+    				{
+    					cboCompanyCreate_Change("CrearFicha_Sector", "txtCrearFicha_Sector"); 
+    					$("#txtCrearFicha_Subcomponente option").remove();
+    					if ($("#rdbCrearFicha_Componente input:radio[name=rdbComponente]:checked").val() == 1)
+    					{
+    						$("#CrearFichaSubcomponentes_").slideDown();
+    						$.post("php/CargarSubcomponentes.php",
+    								{IdSector : $(this).val()},
+    								function (data)
+    								{
+										$.each(data,function(index,value) 
+										{
+											var tds = "<option value='" + data[index].IdSubcomponente + "' Subcomponente = '" + data[index].Subcomponente + "'>" + data[index].Nombre + "</option>";
+											$("#txtCrearFicha_Subcomponente").append(tds);
+										});
+    								}
+    								,"json"
+    							);
+							
+							$("#txtCrearFicha_Indicador option").remove();
+    						$.post("php/CargarIndicadores.php",
+    								{IdSector : $(this).val()},
+    								function (data)
+    								{
+										$.each(data,function(index,value) 
+										{
+											var tds = "<option value='" + data[index].IdIndicador + "' Indicador = '" + data[index].Indicador + "'>" + data[index].Nombre + "</option>";
+											$("#txtCrearFicha_Indicador").append(tds);
+										});
+    								}
+    								,"json"
+    							);
+    					}
+    					else
+    						{$("#CrearFichaSubcomponentes_").slideUp();}
+    				});
+
+		$("#txtEditarFicha_Sector").on("change", function()
+    				{
+    					cboCompanyCreate_Change("EditarFicha_Sector", "txtEditarFicha_Sector"); 
+    					
+    					if ($("#txtEditarFicha_Componente").val() == 1)
+    					{
+    						$("#EditarFichaSubcomponentes_").slideDown();
+
+    						$("#txtEditarFicha_Subcomponente option").remove();
+    						$.post("php/CargarSubcomponentes.php",
+    								{IdSector : $(this).val()},
+    								function (data)
+    								{
+										$.each(data,function(index,value) 
+										{
+											var tds = "<option value='" + data[index].IdSubcomponente + "' Subcomponente = '" + data[index].Subcomponente + "'>" + data[index].Nombre + "</option>";
+											$("#txtEditarFicha_Subcomponente").append(tds);
+										});
+    								}
+    								,"json"
+    							);
+							
+							$("#txtEditarFicha_Indicador option").remove();
+    						$.post("php/CargarIndicadores.php",
+    								{IdSector : $(this).val()},
+    								function (data)
+    								{
+										$.each(data,function(index,value) 
+										{
+											var tds = "<option value='" + data[index].IdIndicador + "' Indicador = '" + data[index].Indicador + "'>" + data[index].Nombre + "</option>";
+											$("#txtEditarFicha_Indicador").append(tds);
+										});
+    								}
+    								,"json"
+    							);
+    					}
+    					else
+    						{$("#EditarFichaSubcomponentes_").slideUp();}
+    				});
     $("#txtEditarFicha_Sector").on("change", function(){cboCompanyCreate_Change("EditarFicha_Sector", "txtEditarFicha_Sector");});
 
     $("#txtMyUsersEdit_Company").on("change", function(){cboCompanyCreate_Change("CompanyData_Edit", "txtMyUsersEdit_Company");});
@@ -137,6 +247,23 @@ function arranque()
 
 	$("#btnCrearFicha_SectorCrear").on("click", CrearSector);
     $("#btnEditarFicha_SectorCrear").on("click", CrearSector);
+
+    $("#txtBuscarContrato_Parametro").on("change", txtBuscarContrato_Parametro_Change);
+
+    $("#frmBuscarContrato_Resultados_MasInfo_Cerrar").on("click", frmBuscarContrato_Resultados_MasInfo_Cerrar_Click);
+
+   	$("#rdbCrearFicha_Componente").buttonset();
+   	$("#rdbEditarFicha_Componente").buttonset();
+
+   	$("#rdbCrearFicha_Componente input").live("click", rdbCrearFicha_Componente_Click);
+
+   	$("#txtEditarFicha_Componente").on("change", txtEditarFicha_Componente_Change);
+
+   	$("#txtCrearFicha_Subcomponente").live("change", CrearFichaSubcomponentes__Change);
+
+   	CargarDashboard();
+
+   	$("#frmCrearContrato").on("submit", frmCrearContrato_Submit);
 }
 function CargarUsuario()
 {
@@ -155,6 +282,7 @@ function CargarUsuario()
 	CargarPermisos(Usuario.Id);
 	CargarUsuariosPropios();
 	CargarRoles();
+
 
 }
 function CargarRoles()
@@ -233,10 +361,14 @@ function Seccion(obj)
 	$("#" + idLbl).css("background", "#45505c");
 	$("#" + idLbl).css("color", "white");
 
+	$("#DashBoard").slideUp();
 	$("#BuscarFicha").slideUp();
+	$("#BuscarContrato").slideUp();
+	$("#CrearContrato").slideUp();
 	$("#CrearFicha").slideUp();
 	$("#Users").slideUp();
 	$("#EditarFicha").slideUp();
+
 	$(obj).slideDown();
 }
 function btnCompanyDataCancel_click(evento)
@@ -464,11 +596,12 @@ function abrirPopup(url)
 function ResetearContenedor(IdContenedor)
 {																																										
 		  $('#' + IdContenedor).find(':input').each(function() {
-			if ($(this).attr('type') != 'submit')
+			if ($(this).attr('type') == 'text' || $(this).attr('type') == 'number' || $(this).attr('type') == 'password' || $(this).attr('type') == 'email')
 			  {
                 $(this).val('');
               }
 			});
+		  $('#' + IdContenedor + "textarea").val("");
 }
 function EditarPermisos(IdUsuario, NombreUsuario)
 {
@@ -769,11 +902,26 @@ function CrearFicha_Descripcion()
 function frmCrearFicha_Submit(evento)
 {
 	evento.preventDefault();
+	
+	var varSubcomponente = $("#txtCrearFicha_Subcomponente").val();
+	var varIndicador = $("#txtCrearFicha_Indicador").val();
+
+	if (parseInt($("#rdbCrearFicha_Componente input:radio[name=rdbComponente]:checked").val()) > 1)
+	{
+		varSubcomponente = 42;
+		varIndicador = 25;
+	}
+	
 	$.post("php/CrearProyecto.php",
 			{
 				IdUsuario: Usuario.Id,
 				FichaNum: $("#txtCrearFicha_Numero").val(),
 				Nombre: $("#txtCrearFicha_Nombre").val(),
+				Componente: $("#rdbCrearFicha_Componente input:radio[name=rdbComponente]:checked").val(),
+				DefinicionComponente : $("#txtCrearFicha_ComponenteDefinicion").val(),
+				Subcomponente: varSubcomponente,
+				Indicador: varIndicador,
+				Contrato: $("#txtCrearFicha_Contrato").attr("idContrato"),
 				IdSector: $("#txtCrearFicha_Sector").val(),
 				FechaInicio: $("#txtCrearFicha_FechaIni").val(),
 				FechaFin: $("#txtCrearFicha_FechaFin").val(),
@@ -781,7 +929,6 @@ function frmCrearFicha_Submit(evento)
 				Expediente: $("#txtCrearFicha_NumExpediente").val(),
 				Consultora: $("#txtCrearFicha_Consultora").val(),
 				CostoTotal: $("#txtCrearFicha_Costo").val(),
-				Fuente: $("#txtCrearFicha_Fuente").val(),
 				Des_ObjetivoGeneral: $("#txtCrearFicha_Descripcion_ObjetivoGeneral").val(),
 				Des_ObjetivoEspecifico: $("#txtCrearFicha_Descripcion_ObjetivoEspecifico").val(),
 				Des_Alcance: $("#txtCrearFicha_Descripcion_Alcance").val(),
@@ -789,32 +936,34 @@ function frmCrearFicha_Submit(evento)
 				Des_Resultados: $("#txtCrearFicha_Descripcion_Resultados").val(),
 				Des_Inversion: $("#txtCrearFicha_Descripcion_Inversion").val(),
 				Des_Herramientas: $("#txtCrearFicha_Descripcion_Herramientas").val(),
-				Des_MejoresPracticas: $("#txtCrearFicha_Descripcion_MejoresPracticas").val(),
+				Des_Actividades: $("#txtCrearFicha_Descripcion_Actividades").val(),
 				Des_Obsevaciones: $("#txtCrearFicha_Descripcion_Observaciones").val()
 			},
 			function()
 			{
 				MostrarAlerta("alertCrearFicha", "default", "ui-icon-circle-check", "Hey!", "La Ficha ha sido creada");
 				ResetearContenedor("frmCrearFicha")
+				$("#rdbCrearFicha_Componente").buttonset("refresh")
 			}
 		);
 }
 function frmBuscarFicha_Submit(evento)
 {
 	evento.preventDefault();
-
+/*
 	$.post("php/BuscarProyecto.php",
 			{
 				FichaNum: $("#txtBuscarFicha_Numero").val(),
 				Nombre: $("#txtBuscarFicha_Nombre").val(),
+				Componente: $("#txtBuscarFicha_Componente").val(),
 				IdSector: $("#txtBuscarFicha_Sector").val(),
 				FechaInicio: $("#txtBuscarFicha_FechaIni").val(),
 				FechaFin: $("#txtBuscarFicha_FechaFin").val(),
 				Entidad: $("#txtBuscarFicha_Entidad").val(),
 				Expediente: $("#txtBuscarFicha_NumExpediente").val(),
 				Consultora: $("#txtBuscarFicha_Consultora").val(),
-				CostoTotal: $("#txtBuscarFicha_Costo").val(),
-				Fuente: $("#txtBuscarFicha_Fuente").val(),
+				CostoTotal_i: $("#txtBuscarFicha_Costo_Desde").val(),
+				CostoTotal_o: $("#txtBuscarFicha_Costo_Hasta").val(),
 				Descripcion: $("#txtBuscarFicha_Descripcion").val()
 			},
 			function(data)
@@ -823,6 +972,8 @@ function frmBuscarFicha_Submit(evento)
 				$("#BuscarFicha_Resultados").slideDown();
 
 				$("#tblBuscarFicha tbody tr").remove();
+				
+
 				Fichas = data;
 				$.each(data,
 						function(index, valor)
@@ -830,17 +981,50 @@ function frmBuscarFicha_Submit(evento)
 							var tds;
 
 							tds = "<tr id='" + valor.IdProyecto + "'>";
-									tds += "<td>" + valor.FichaNum + "</td>";
+									tds += "<td>" + valor.NumContrato + "</td>";
 									tds += "<td>" + valor.Nombre + "</td>";
 									tds += "<td>" + valor.FechaInicio + "</td>";
 									tds += "<td>" + valor.FechaFin + "</td>";
 									tds += "<td>" + valor.Expediente + "</td>";
 									tds += "<td>" + valor.Consultora + "</td>";
-									tds += "<td><button id='btnBuscarFicha_MasInfo" + index + "' class='btnBuscarFicha_MasInfo ui-button-info ui-button ui-widget ui-corner-all' title='Información de:" + valor.Nombre + "'><span class='ui-icon ui-icon-comment'></span></button></td>";
+									tds += "<td><button id='btnBuscarFicha_MasInfo" + index + "' class='btnBuscarFicha_MasInfo ui-button-info ui-button ui-widget ui-corner-all' title='Información de:\n" + valor.Nombre + "'><span class='ui-icon ui-icon-comment'></span></button></td>";
+									tds += "<td><button id='btnBuscarFicha_Documento" + valor.IdProyecto + "' class='btnBuscarFicha_Documento ui-button-info ui-button ui-widget ui-corner-all' title='Documento de:\n" + valor.Nombre + "'><span class='ui-icon ui-icon-print'></span></button></td>";
+									tds += "<td><button id='btnBuscarFicha_Eliminar" + valor.IdProyecto + "' class='btnBuscarFicha_Eliminar ui-button-info ui-button ui-widget ui-corner-all' title='Eliminar:\n" + valor.Nombre + "'><span class='ui-icon ui-icon-closethick'></span></button></td>";
 							tds += '</tr>';	
 
 							$("#tblBuscarFicha tbody").append(tds);
 							
+							$("#tblBuscarFicha").dataTable().fnAddData( [
+						}
+				);
+			},
+			"json");
+*/
+	$.post("php/BuscarProyecto.php",
+			function(data)
+			{
+				$("#frmBuscarFicha").slideUp();
+				$("#BuscarFicha_Resultados").slideDown();
+
+				$("#tblBuscarFicha").dataTable().fnClearTable();
+
+				Fichas = data;
+				$.each(data,
+						function(index, valor)
+						{
+							var tds;
+
+							$("#tblBuscarFicha").dataTable().fnAddData( [
+									valor.NumContrato,
+									valor.Nombre,
+									valor.FechaInicio,
+									valor.FechaFin,
+									valor.Expediente,
+									valor.Consultora,
+									"<button id='btnBuscarFicha_MasInfo" + index + "' class='btnBuscarFicha_MasInfo ui-button-info ui-button ui-widget ui-corner-all' title='Información de:\n" + valor.Nombre + "' IdProyecto='" + valor.IdProyecto + "'><span class='ui-icon ui-icon-comment'></span></button>",
+									"<button id='btnBuscarFicha_Documento" + valor.IdProyecto + "' class='btnBuscarFicha_Documento ui-button-info ui-button ui-widget ui-corner-all' title='Documento de:\n" + valor.Nombre + "'><span class='ui-icon ui-icon-print'></span></button>",
+									"<button id='btnBuscarFicha_Eliminar" + valor.IdProyecto + "' class='btnBuscarFicha_Eliminar ui-button-info ui-button ui-widget ui-corner-all' title='Eliminar:\n" + valor.Nombre + "'><span class='ui-icon ui-icon-closethick'></span></button>"
+									]);
 						}
 				);
 			},
@@ -852,15 +1036,27 @@ function btnBuscarFicha_MasInfo_Click()
 	$("#EditarFicha").slideDown();
 	
 	var IdFicha = $(this).attr("id").replace("btnBuscarFicha_MasInfo", "");
+	IdFicha2 = $(this).attr("IdProyecto");
 	
-	$("#frmEditarFicha").attr("IdProyecto", $(this).parent("td").parent("tr").attr("id"));
-	$("#EditarFicha_Descripcion_Menu").attr("IdProyecto", $(this).parent("td").parent("tr").attr("id"));
+	$("#frmEditarFicha").attr("IdProyecto", $(this).attr("IdProyecto"));
+	$("#EditarFicha_Descripcion_Menu").attr("IdProyecto", $(this).attr("id"));
 	$("#EditarFicha_Descripcion_Menu").attr("IdFicha", IdFicha);
+	$("#txtEditarFicha_Contrato").val("");		
 	
+	$.post("php/BuscarContratodeFicha.php", {IdProyecto : IdFicha2},
+		function(data)
+		{
+			$("#txtEditarFicha_Contrato").attr("idContrato", data.IdContrato);
+			$("#txtEditarFicha_Contrato").val(data.NumContrato);		
+		}
+		,"json");
+
+	CargarContratosCBO("txtEditarFicha_Contrato");
 	
 	$("#frmEditarFicha h3 span").text(Fichas[IdFicha].FichaNum);
 		$('#txtEditarFicha_Numero').val(Fichas[IdFicha].FichaNum);
 		$('#txtEditarFicha_Nombre').val(Fichas[IdFicha].Nombre);
+		$('#txtEditarFicha_Componente').val(Fichas[IdFicha].Componente);
 		$('#txtEditarFicha_Sector').val(Fichas[IdFicha].IdSector);
 		$('#txtEditarFicha_FechaIni').val(Fichas[IdFicha].FechaInicio);
 		$('#txtEditarFicha_FechaFin').val(Fichas[IdFicha].FechaFin);
@@ -868,7 +1064,73 @@ function btnBuscarFicha_MasInfo_Click()
 		$('#txtEditarFicha_NumExpediente').val(Fichas[IdFicha].Expediente);
 		$('#txtEditarFicha_Consultora').val(Fichas[IdFicha].Consultora);
 		$('#txtEditarFicha_Costo').val(Fichas[IdFicha].CostoTotal);
-		$('#txtEditarFicha_Fuente').val(Fichas[IdFicha].Fuente);
+		//$('#txtEditarFicha_Fuente').val(Fichas[IdFicha].Fuente);
+
+		
+		///////////////////$('#txtEditarFicha_Subcomponente').val(Fichas[IdFicha].Subcomponente);
+
+	$("#txtEditarFicha_DefinicionComponente option").remove();
+
+	$.post("php/CargarDefinicionComponente.php", {idComponente: $("#txtEditarFicha_Componente").val()}, 
+		function(data)
+		{
+			$.each(data,function(index,value) 
+				{
+					var tds = "<option value='" + data[index].Id + "' Definicion = '" + data[index].Id + "'>" + data[index].Nombre + "</option>";
+					$("#txtEditarFicha_DefinicionComponente").append(tds);
+				});
+			$("#txtEditarFicha_DefinicionComponente").val(Fichas[IdFicha].DefinicionComponente);
+		}
+		, "json");
+
+						if ($("#txtEditarFicha_Componente").val() == 1)
+    					{
+    						$("#EditarFichaSubcomponentes_").slideDown();
+
+    						$("#txtEditarFicha_Subcomponente option").remove();
+    						$.post("php/CargarSubcomponentes.php",
+    								{IdSector : Fichas[IdFicha].IdSector},
+    								function (data)
+    								{
+										$.each(data,function(index,value) 
+										{
+											var tds = "<option value='" + data[index].IdSubcomponente + "' Subcomponente = '" + data[index].Subcomponente + "'>" + data[index].Nombre + "</option>";
+											$("#txtEditarFicha_Subcomponente").append(tds);
+										});
+										$('#txtEditarFicha_Subcomponente').val(Fichas[IdFicha].Subcomponente);
+    								}
+    								,"json"
+    							);
+							
+							$("#txtEditarFicha_Indicador option").remove();
+    						$.post("php/CargarIndicadores.php",
+    								{IdSector : Fichas[IdFicha].IdSector},
+    								function (data)
+    								{
+										$.each(data,function(index,value) 
+										{
+											var tds = "<option value='" + data[index].IdIndicador + "' Indicador = '" + data[index].Indicador + "'>" + data[index].Nombre + "</option>";
+											$("#txtEditarFicha_Indicador").append(tds);
+										});
+										$('#txtEditarFicha_Indicador').val(Fichas[IdFicha].Indicador);
+    								}
+    								,"json"
+    							);
+    					}
+    					else
+    						{$("#EditarFichaSubcomponentes_").slideUp();}
+
+
+	$(".EditarFicha_Menu_Item").fadeOut();
+	if (Fichas[IdFicha].Componente == 1)
+	{
+		$(".EditarFicha_Menu_Item").fadeIn();
+	}
+	if (Fichas[IdFicha].Componente == 2)
+	{
+		$("#artEditarFicha_Menu_Item_Objetivos").fadeIn();
+		$("#artEditarFicha_Menu_Item_Observaciones").fadeIn();
+	}
 }
 function EditarFicha_Descripcion_Menu_article_Click()
 {
@@ -909,7 +1171,7 @@ function EditarFicha_Descripcion_Menu_article_Click()
 		$("#txtEditarFicha_Descripcion").attr("NomCampo", "Inversion");
 	}
 
-	if($(this).text() == "Herramientas/Procedimientos")
+	if($(this).text() == "Herramientas/Procedimientos:")
 	{
 		$("#txtEditarFicha_Descripcion").val(Fichas[$(this).parent("div").attr("IdFicha")].Herramientas);
 		$("#txtEditarFicha_Descripcion").attr("NomCampo", "Herramientas");
@@ -921,7 +1183,7 @@ function EditarFicha_Descripcion_Menu_article_Click()
 		$("#txtEditarFicha_Descripcion").attr("NomCampo", "MejoresPracticas");
 	}
 
-	if($(this).text() == "Observaciones")
+	if($(this).text() == "Observaciones:")
 	{
 		$("#txtEditarFicha_Descripcion").val(Fichas[$(this).parent("div").attr("IdFicha")].Observaciones);
 		$("#txtEditarFicha_Descripcion").attr("NomCampo", "Observaciones");
@@ -976,21 +1238,34 @@ function EditarFicha_Descripcion(ProyectoId)
 function frmEditarFicha_Submit(evento)
 {
 	evento.preventDefault();
-	
+
+	var varSubcomponente = $("#txtEditarFicha_Subcomponente").val();
+	var varIndicador = $("#txtEditarFicha_Indicador").val();
+
+	if (parseInt($("#txtEditarFicha_Componente").val()) > 1)
+	{
+		varSubcomponente = 42;
+		varIndicador = 25;
+	}
+
 	$.post("php/EditarProyecto.php",
 			{
 				IdUsuario: Usuario.Id,
 				IdProyecto: $("#frmEditarFicha").attr("IdProyecto"),
 				FichaNum: $("#txtEditarFicha_Numero").val(),
+				IdContrato: $("#txtEditarFicha_Contrato").attr("idContrato"),
 				Nombre: $("#txtEditarFicha_Nombre").val(),
+				Componente: $("#txtEditarFicha_Componente").val(),
+				DefinicionComponente: $("#txtEditarFicha_DefinicionComponente").val(),
+				Subcomponente: varSubcomponente,
+				Indicador: varIndicador,
 				IdSector: $("#txtEditarFicha_Sector").val(),
 				FechaInicio: $("#txtEditarFicha_FechaIni").val(),
 				FechaFin: $("#txtEditarFicha_FechaFin").val(),
 				Entidad: $("#txtEditarFicha_Entidad").val(),
 				Expediente: $("#txtEditarFicha_NumExpediente").val(),
 				Consultora: $("#txtEditarFicha_Consultora").val(),
-				CostoTotal: $("#txtEditarFicha_Costo").val(),
-				Fuente: $("#txtEditarFicha_Fuente").val()
+				CostoTotal: $("#txtEditarFicha_Costo").val()
 			},
 			function(data)
 			{
@@ -1048,4 +1323,679 @@ function CrearSector(evento)
 			
 			$(Campo).val(data);
 		});
+}
+function btnBuscarFicha_Documento_Click()
+{
+	
+	var IdFicha = $(this).attr("id").replace("btnBuscarFicha_Documento", "");
+	abrirPopup("php/VerPDFFicha.php?id=" + IdFicha);
+}
+function txtBuscarContrato_Parametro_Change()
+{
+	$("#txtBuscarContrato_Valor").attr("placeholder", $(this).val());
+}
+function frmBuscarContrato_Submit(evento)
+{
+	evento.preventDefault();
+
+	$.post("php/BuscarContrato.php",
+			{
+				Parametro: $("#txtBuscarContrato_Parametro").val(),
+				Valor: $("#txtBuscarContrato_Valor").val()
+			},
+			function(data)
+			{
+				$("#tblBuscarContrato tbody tr").remove();
+				
+				$.each(data,
+						function(index, valor)
+						{
+							var tds;
+
+							tds = "<tr id='" + valor.IdContrato + "'>";
+									tds += "<td>" + valor.NumContrato + "</td>";
+									tds += "<td>" + valor.Contratista + "</td>";
+									tds += "<td>" + formatNumber(valor.ValorInicial, '$') + "</td>";
+									tds += "<td>" + valor.FechaInicio + "</td>";
+									tds += "<td>" + valor.FechaTerminacion + "</td>";
+									tds += "<td><button id='btnBuscarContrato_MasInfo" + valor.IdContrato + "' class='btnBuscarContrato_MasInfo ui-button-info ui-button ui-widget ui-corner-all' title='Información de:\n" + valor.NumContrato + "'><span class='ui-icon ui-icon-comment'></span></button></td>";
+							tds += '</tr>';	
+
+							$("#tblBuscarContrato tbody").append(tds);
+							
+						}
+				);
+			},
+			"json");
+}
+function btnBuscarContrato_MasInfo_Click()
+{
+	/******/
+	var IdContrato = $(this).attr("id").replace("btnBuscarContrato_MasInfo", "");
+	$("#tblBuscarContrato").slideUp();
+	$("#frmBuscarContrato_Resultados_MasInfo").fadeIn();
+
+	CargarFichasCBO("txtBuscarContrato_AsignarFicha");
+	$.post("php/BuscarContrato.php",
+			{
+				Parametro: "IdContrato",
+				Valor: IdContrato
+			},
+			function(data)
+			{
+				$("#tblBuscarContrato_Info_1 tbody tr").remove();
+				$("#tblBuscarContrato_Info_2 tbody tr").remove();
+				$("#tblBuscarContrato_Info_3 tbody tr").remove();
+				
+				$.each(data,
+						function(index, valor)
+						{
+							var tds;
+
+							tds = "<tr id='" + valor.IdContrato + "'>";
+									tds += "<td>" + valor.NumContrato + "</td>";
+									tds += "<td>" + valor.FechaDeFirma + "</td>";
+									tds += "<td>" + valor.Contratista + "</td>";
+							tds += '</tr>';	
+
+							$("#tblBuscarContrato_Info_1 tbody").append(tds);
+
+							tds = "<tr id='" + valor.IdContrato + "'>";
+									tds += "<td>" + valor.ObjetoSuscripcion + "</td>";
+									tds += "<td>" + formatNumber(valor.ValorInicial, '$') + "</td>";
+									tds += "<td>" + valor.FechaRegistroPtaInicial + "</td>";
+									tds += "<td>" + valor.PlazoEjecucionInicial + "</td>";
+							tds += '</tr>';	
+
+							$("#tblBuscarContrato_Info_2 tbody").append(tds);
+
+							tds = "<tr id='" + valor.IdContrato + "'>";
+									tds += "<td>" + valor.FechaInicio + "</td>";
+									tds += "<td>" + valor.FechaTerminacion + "</td>";
+							tds += '</tr>';	
+
+							$("#tblBuscarContrato_Info_3 tbody").append(tds);
+							if($('#elFinder').elfinder('instance'))
+							{ $('#elFinder').elfinder('destroy');}
+							
+							
+							var elf = $('#elFinder').elfinder({
+								url : 'Tools/elfinder/php/connector.php?NumContrato=' + valor.NumContrato
+								 ,lang: 'es',  
+								 handlers:
+									 {
+									 	upload : function(event) 
+									 			{ 
+									 				
+									 			},
+									 	open: function(event)
+										 		{ 
+										 			
+									 			},
+									 	rm : function(event)
+									 			{
+									 				
+									 			}
+									 }           
+							}).elfinder('instance');
+						}
+				);
+			},
+			"json");
+}
+function frmBuscarContrato_Resultados_MasInfo_Cerrar_Click()
+{
+	$("#tblBuscarContrato").slideDown();
+	$("#frmBuscarContrato_Resultados_MasInfo").fadeOut();
+}
+function CargarContratosCBO(cbo)
+{
+	$.post("php/CargarContratos.php",
+			function(data)
+			{
+				$.each(data,function(index,value)
+				{
+
+					$("#" + cbo)
+					.autocomplete(
+					{
+						source: data,
+						select: function( event, ui ) 
+								{
+									$(this).attr("idContrato", ui.item.IdContrato);
+								}
+					});
+				});
+			}
+		,"json");
+}
+function CargarFichasCBO(cbo)
+{
+	$("#" + cbo + " option").remove();
+	
+	$("#" + cbo).append("<option value=''>Ninguno</option>");
+	$.post("php/CargarFichas.php",
+			function(data)
+			{
+				$.each(data,function(index,value)
+				{
+					$("#" + cbo).append("<option value=" + value.IdProyecto + ">" + value.Nombre + "</option>");
+				});
+			}
+		,"json");
+}
+function btnBuscarFicha_Eliminar_Click(evento)
+{
+	var IdFicha = $(this).attr("id").replace("btnBuscarFicha_Eliminar", "");
+	var NumFicha = $(this).attr("title").replace("Eliminar:", "");
+	$("#BorrarFicha article span").text(NumFicha);
+	
+	$("#BorrarFicha").dialog({
+				autoOpen: false, 				
+				title: "Borrar Ficha",
+				minWidth: 200,
+				modal: true,
+				buttons: [
+							{
+								text: "Borrar",
+								click: function() { 
+													$.post('php/EliminarFicha.php', {Id: IdFicha});
+													$(this).dialog("close"); 
+													frmBuscarFicha_Submit(evento);
+												  }
+							},
+							{
+								text: "Cancelar",
+								click: function() { $(this).dialog("close"); 
+												  }
+							}
+						  ]
+								});
+		$("#BorrarFicha").dialog('open');	
+}
+function rdbCrearFicha_Componente_Click()
+{
+	var varComponente = $(this).val();
+	$(".CrearFicha_Descripcion_Menu article").fadeOut();
+	$("#CrearFichaSubcomponentes").slideDown();
+
+	cboCompanyCreate_Change("CrearFicha_Sector", "txtCrearFicha_Sector"); 
+
+	$("#txtCrearFicha_ComponenteDefinicion option").remove();
+
+	$.post("php/CargarDefinicionComponente.php", {idComponente: varComponente}, 
+		function(data)
+		{
+			$.each(data,function(index,value) 
+				{
+					var tds = "<option value='" + data[index].Id + "' Definicion = '" + data[index].Id + "'>" + data[index].Nombre + "</option>";
+					$("#txtCrearFicha_ComponenteDefinicion").append(tds);
+				});
+		}
+		, "json");
+
+	if (varComponente == 1)
+	{
+		$(".CrearFicha_Descripcion_Menu article").fadeIn();
+		$("#CrearFichaSubcomponentes_").slideDown();
+			$.post("php/CargarSubcomponentes.php",
+    								{IdSector : 1},
+    								function (data)
+    								{
+    									$("#txtCrearFicha_Subcomponente option").remove();
+			   
+										$.each(data,function(index,value) 
+										{
+											var tds = "<option value='" + data[index].IdSubcomponente + "' Subcomponente = '" + data[index].Subcomponente + "'>" + data[index].Nombre + "</option>";
+											$("#txtCrearFicha_Subcomponente").append(tds);
+										});
+										CrearFichaSubcomponentes__Change();
+    								}
+    								,"json"
+    							);
+
+									$("#txtCrearFicha_Indicador option").remove();
+			$.post("php/CargarIndicadores.php",
+    								{IdSector : $(this).val()},
+    								function (data)
+    								{
+										$.each(data,function(index,value) 
+										{
+											var tds = "<option value='" + data[index].IdIndicador + "' Subcomponente = '" + data[index].Indicador + "'>" + data[index].Nombre + "</option>";
+											$("#txtCrearFicha_Indicador").append(tds);
+										});
+    								}
+    								,"json"
+    							);
+	}
+	if (varComponente == 2)
+	{
+		$(".CrearFicha_Descripcion_Menu article").fadeIn();
+		/*
+		$("#artCrearFicha_Descripcion_Objetivos").fadeIn();
+		$("#artCrearFicha_Descripcion_Actividades").fadeIn();
+		$("#artCrearFicha_Descripcion_Observaciones").fadeIn();
+		$("#CrearFichaSubcomponentes_").slideUp();
+		*/
+
+	}
+	if (varComponente == 3)
+	{
+		$(".CrearFicha_Descripcion_Menu article").fadeIn();
+		/*
+		$("#artCrearFicha_Descripcion_Objetivos").fadeIn();
+		$("#artCrearFicha_Descripcion_Actividades").fadeIn();
+		$("#artCrearFicha_Descripcion_Observaciones").fadeIn();
+		$("#CrearFichaSubcomponentes_").slideUp();
+		*/
+
+	}
+}
+function txtEditarFicha_Componente_Change()
+{
+	$(".EditarFicha_Menu_Item").fadeOut();
+
+	$("#txtEditarFicha_DefinicionComponente option").remove();
+	$.post("php/CargarDefinicionComponente.php", {idComponente: $(this).val()}, 
+		function(data)
+		{
+			$.each(data,function(index,value) 
+				{
+					var tds = "<option value='" + data[index].Id + "' Definicion = '" + data[index].Id + "'>" + data[index].Nombre + "</option>";
+					$("#txtEditarFicha_DefinicionComponente").append(tds);
+				});
+		}
+		, "json");
+
+	if ($(this).val() == 1)
+	{
+		$(".EditarFicha_Menu_Item").fadeIn();
+		$("#EditarFichaSubcomponentes_").slideDown();
+	}
+	if ($(this).val() == 2)
+	{
+		$("#artEditarFicha_Menu_Item_Objetivos").fadeIn();
+		$("#artEditarFicha_Menu_Item_Observaciones").fadeIn();
+		$("#EditarFichaSubcomponentes_").slideUp();
+	}
+}
+function formatNumber(num,prefix)  
+{  
+	num = Math.round(parseFloat(num)*Math.pow(10,2))/Math.pow(10,2)  
+	prefix = prefix || '';  
+	num += '';  
+	var splitStr = num.split('.');  
+	var splitLeft = splitStr[0];  
+	var splitRight = splitStr.length > 1 ? '.' + splitStr[1] : '';  
+	//splitRight = splitRight + '00';  
+	splitRight = splitRight.substr(0,3);  
+	var regx = /(\d+)(\d{3})/;  
+	while (regx.test(splitLeft)) 
+	{  
+		splitLeft = splitLeft.replace(regx, '$1' + '.' + '$2');  
+	}  
+	return prefix + splitLeft + splitRight;  
+}  
+function CrearFichaSubcomponentes__Change()
+{
+	//alert($("#txtCrearFicha_Subcomponente option:selected").val()); -->Aqui esta el Id del Subcomponente
+	//$("#txtCrearFicha_Subcomponente__").val($("#txtCrearFicha_Subcomponente option:selected").attr("Subcomponente"));
+}
+function CargarDashboard()
+{
+	
+
+	/*
+*/
+
+}
+function frmCrearContrato_Submit(evento)
+{
+	evento.preventDefault();
+	$.post("php/CrearContrato.php",
+	{
+		IdUsuario : Usuario.Id,
+		NumContrato: $("#txtCrearContrato_Numero").val(), 
+		FechaDeFirma: $("#txtCrearContrato_FechaFirma").val(), 
+		Contratista: $("#txtCrearContrato_Contratista").val(), 
+		ModalidadDelProceso: $("#txtCrearContrato_Modalidad").val(), 
+		ObjetoSuscripcion: $("#txtCrearContrato_Objeto").val(), 
+		ValorInicial: $("#txtCrearContrato_Valor").val(), 
+		FechaRegistroPtaInicial: $("#txtCrearContrato_Registro").val(), 
+		PlazoEjecucionInicial: $("#txtCrearContrato_Plazo").val(), 
+		FechaInicio: $("#txtCrearContrato_FInicio").val(), 
+		FechaTerminacion : $("#txtCrearContrato_FTerminacion").val()
+	},
+	function(data)
+	{
+		MostrarAlerta("alertCrearContrato", "default", "ui-icon-circle-check", "Hey!", "La Ficha ha sido creada");
+		ResetearContenedor("frmCrearContrato")
+	}
+		);
+	
+
+
+}
+function DashBoard_Opciones_input_click()
+{
+	var Contenedor = document.getElementById("divGraficas");
+
+	var d1 = [];
+	var datos2 = new Array;
+
+	if ($(this).val() == 1)
+	{
+		$.post("php/DashBoardCargarFichas.php",
+			function(datos)
+			{
+			
+				var d1 = [];
+				var datos2 = new Array;
+
+				$.each(datos, function(index, value)
+						{
+							d1.push([parseInt(value.Label), parseInt(value.Cantidad)]);
+							datos2[index] = {"data": [d1[index]], "label": "Componente " + value.Label};
+						}
+					);
+				
+				graph = Flotr.draw(Contenedor,
+					datos2
+					, {
+						title: "Fichas por Componente",
+					    bars : 
+					    {
+					      show : true,
+					      stacked : true,
+					      horizontal : false,
+					      barWidth : 0.6,
+					      lineWidth : 1,
+					      shadowSize : 1
+					    },
+					    grid : 
+					    {
+					      verticalLines : false,
+					      horizontalLines : true
+					    },
+					    legend:
+					    {
+					    	backgroundOpacity: 0,
+					    	position: 'ne'
+					    },
+					    mouse:
+					    {
+					    	relative: true,
+					    	track: true,
+					    	tackAll: true,
+					    	trackDecimals: 0,
+					    	trackFormatter: function (x) 
+					    	{
+					    		//alert(x),
+					        	/*var
+					          	x = parseInt(x);
+					        	return datos2[x].label;
+					        	$.each(x.series, function(index, value)
+					        		{
+					        			alert(index + ': '+ value);
+					        		});*/
+					        	return x.series.label +": " + x.series.data[0][1];
+					      	}
+					    },
+					     xaxis: 
+					    {
+					    	showLabels: false
+					    },
+					    yaxis:
+					    {
+					    	autoscale:true,
+					    	min: 0,
+					    	noTicks: 2,
+					    	tickDecimals: 0,
+					    }
+
+						});
+				cargarConveciones(datos2);
+			}
+		,"json");
+	}
+
+	if ($(this).val() == 2)
+	{
+		$.post("php/DashBoardCargarAnios.php",
+			function(datos)
+			{
+				$.each(datos, function(index, value)
+						{
+							d1.push([parseInt(value.Label), parseInt(value.Cantidad)]);
+							datos2[index] = {"data": [d1[index]], "label": value.Label};
+						}
+					);
+			
+				graph = Flotr.draw(Contenedor,
+					datos2
+					, {
+						title: "Fichas por Año",
+					    bars : {
+					      show : true,
+					      horizontal : false,
+					      shadowSize : 5,
+					      barWidth: 1
+					    },
+					    legend:
+					    {
+					    	backgroundOpacity: 0,
+					    	position: 'ne'
+					    },
+					    grid : 
+					    {
+					      verticalLines : false,
+					      horizontalLines : true
+					    },
+					    mouse:
+					    {
+					    	relative: true,
+					    	track: true,
+					    	tackAll: true,
+					    	trackDecimals: 0,
+					    	trackFormatter: function (x) 
+					    	{
+					    		//alert(x),
+					        	/*var
+					          	x = parseInt(x);
+					        	return datos2[x].label;
+					        	$.each(x.series, function(index, value)
+					        		{
+					        			alert(index + ': '+ value);
+					        		});*/
+					        	return x.series.label +": " + x.series.data[0][1];
+					      	}
+					    },
+					     xaxis: 
+					    {  	autoscale: true,
+					    	showLabels: false   },
+					    yaxis:
+					    {  	
+					    	autoscale:true,
+					    	autoscaleMargin : 1,
+					    	min: 0,
+					    	showLabels: true,
+					    	tickDecimals: 0
+					    }
+						});
+				cargarConveciones(datos2);
+			}
+		,"json");
+		
+	}
+
+	if ($(this).val() == 3)
+	{
+		$.post("php/DashBoardCargarSectores.php",
+			function(datos)
+			{
+				$.each(datos, function(index, value)
+						{
+							d1.push([index, parseInt(value.Cantidad)]);
+							datos2[index] = {"data": [d1[index]], "label": value.Label};
+						}
+					);
+
+				cargarGrafica(datos2, "Por Sector");
+				cargarConveciones(datos2);
+
+			}
+		,"json");
+	}
+
+	if ($(this).val() ==4)
+	{
+		$.post("php/DashBoardCargarSubcomponentes.php",
+			function(datos)
+			{
+				$.each(datos, function(index, value)
+						{
+							//d1.push([parseInt(datos[index].Label), parseInt(datos[index].Cantidad)]);
+							d1.push([index, parseInt(datos[index].Cantidad)]);
+							datos2[index] = {"data": [d1[index]], "label": datos[index].Label};
+						}
+					);
+			
+				graph = Flotr.draw(Contenedor,
+					datos2
+					, {
+						title: "Fichas por Subcomponente",
+					    bars : {
+					      show : true,
+					      horizontal : false,
+					      shadowSize : 5,
+					      barWidth: 1
+					    },
+					    legend:
+					    {
+					    	backgroundOpacity: 0,
+					    	position: 'ne'
+					    },
+					    grid : 
+					    {
+					      verticalLines : false,
+					      horizontalLines : true
+					    },
+					    mouse:
+					    {
+					    	relative: true,
+					    	track: true,
+					    	tackAll: true,
+					    	trackDecimals: 0,
+					    	trackFormatter: function (x) 
+					    	{
+					    		//alert(x),
+					        	/*var
+					          	x = parseInt(x);
+					        	return datos2[x].label;
+					        	$.each(x.series, function(index, value)
+					        		{
+					        			alert(index + ': '+ value);
+					        		});*/
+					        	return x.series.label +": " + x.series.data[0][1];
+					      	}
+					    },
+					     xaxis: 
+					    {  	
+					    	showLabels: false /*,
+
+					    	tickFormatter: function (x) 
+					    	{
+					        	var
+					          	x = parseInt(x);
+					        	return datos2[x].label;
+					      	},*/
+					    },
+					    yaxis:
+					    {  	
+					    	autoscale:true,
+					    	autoscaleMargin : 1,
+					    	min: 0,
+					    	showLabels: true,
+					    	tickDecimals: 0
+					    }
+						});
+
+				cargarConveciones(datos2);
+			}
+		,"json");
+	}
+}
+function rgbToHex(R,G,B) 
+{
+		return toHex(R)+toHex(G)+toHex(B)
+}
+function toHex(n) 
+{
+	 n = parseInt(n,10);
+	 if (isNaN(n)) return "00";
+	 n = Math.max(0,Math.min(n,255));
+	 return "0123456789ABCDEF".charAt((n-n%16)/16) + "0123456789ABCDEF".charAt(n%16);
+}
+function cargarConveciones(datos2)
+{
+	var tmpObj = $(".flotr-legend-color-box");
+				$("#divGraficasConvenciones article").remove();
+				$.each(tmpObj, function(index, value)
+				{
+					var objHtml = $(value).html();
+									
+					var strObj = objHtml.substring(parseInt(objHtml.indexOf("(") + 1 ), parseInt(objHtml.indexOf(")")) );
+					var strObj_ = strObj.split(",");
+					
+					$("#divGraficasConvenciones").append("<article><div style='width:1em; height:1em;background:#"+ rgbToHex(strObj_[0], strObj_[1], strObj_[2]) + ";'></div><span> " + datos2[index].label+"</span></article>");
+
+				});
+				$(".flotr-legend").hide();
+}
+function cargarGrafica(datos2, titulo)
+{
+	var Contenedor = document.getElementById("divGraficas");
+	graph = Flotr.draw(Contenedor,
+					datos2
+					, {
+						title: titulo,
+					    bars : {
+					      show : true,
+					      horizontal : false,
+					      shadowSize : 5,
+					      barWidth: 1
+					    },
+					    legend: 
+					    {
+					    	backgroundOpacity: 0,
+					    	position: 'ne'
+					    },
+					    grid : 
+					    {
+					      verticalLines : false,
+					      horizontalLines : true
+					    },
+					    mouse:
+					    {
+					    	relative: true,
+					    	track: true,
+					    	tackAll: true,
+					    	trackDecimals: 0,
+					    	trackFormatter: function (x) 
+					    	{
+					        	return x.series.label +": " + x.series.data[0][1];
+					      	}
+					    },
+					     xaxis: 
+					    {  	autoscale: true,
+					    	showLabels: false   },
+					    yaxis:
+					    {  	
+					    	autoscale:true,
+					    	autoscaleMargin : 1,
+					    	min: 0,
+					    	showLabels: true,
+					    	tickDecimals: 0
+					    }
+						});
 }

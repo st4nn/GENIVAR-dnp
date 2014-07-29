@@ -1,7 +1,7 @@
 <?php 
    include("conectar.php"); 
 	
-	$Rol = $_POST['Id_Rol'];
+	$Rol = addslashes($_POST['Id_Rol']);
 
 		class Rols
 	{
@@ -25,7 +25,7 @@
 		$Roles[$Index] = new Rols();
 		
 		$Roles[$Index]->RolId = $row['IdRol'];
-		$Roles[$Index]->RolName = $row['Name'];
+		$Roles[$Index]->RolName = utf8_encode($row['Name']);
 		$Index++;
        } while ($row = mysql_fetch_array($result)) ;
 

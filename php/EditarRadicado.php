@@ -2,13 +2,13 @@
    require("conectar.php"); 
 	$link=Conectarse(); 
 
-	$CE_Numero = $_POST['CE_Numero'];
+	$CE_Numero = addslashes($_POST['CE_Numero']);
 	
-	$CE_Descripcion = $_POST['CE_Descripcion'];
-	$CE_FCreacion = $_POST['CE_FCreacion'];
-	$CE_FEnvio = $_POST['CE_FEnvio'];
-	$CE_Firma = $_POST['CE_Firma'];
-	$CE_Usuario = $_POST['CE_Usuario'];
+	$CE_Descripcion = addslashes($_POST['CE_Descripcion']);
+	$CE_FCreacion = addslashes($_POST['CE_FCreacion']);
+	$CE_FEnvio = addslashes($_POST['CE_FEnvio']);
+	$CE_Firma = addslashes($_POST['CE_Firma']);
+	$CE_Usuario = addslashes($_POST['CE_Usuario']);
 	
 	$CE_FSistema = DATE('Y-m-d H:i:s', time());
 	

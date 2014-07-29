@@ -3,25 +3,46 @@
    require("conectar.php"); 
 	$link=Conectarse(); 
 
-	$IdUsuario = $_POST['IdUsuario'];
-	$IdProyecto = $_POST['IdProyecto'];
+	$IdUsuario = addslashes($_POST['IdUsuario']);
+	$IdProyecto = addslashes($_POST['IdProyecto']);
+	$IdContrato = addslashes($_POST['IdContrato']);
 
-	$FichaNum = $_POST['FichaNum'];
-	$Nombre = $_POST['Nombre'];
-	$IdSector = $_POST['IdSector'];
-	$FechaInicio = $_POST['FechaInicio'];
-	$FechaFin = $_POST['FechaFin'];
-	$Entidad = $_POST['Entidad'];
-	$Expediente = $_POST['Expediente'];
-	$Consultora = $_POST['Consultora'];
-	$CostoTotal = $_POST['CostoTotal'];
-	$Fuente = $_POST['Fuente'];
-	
+	$FichaNum = addslashes(utf8_decode($_POST['FichaNum']));
+	$Nombre = addslashes(utf8_decode($_POST['Nombre']));
+	$Componente = addslashes(utf8_decode($_POST['Componente']));
+	$DefinicionComponente = addslashes(utf8_decode($_POST['DefinicionComponente']));
+	$Subcomponente = addslashes(utf8_decode($_POST['Subcomponente']));
+	$Indicador = addslashes(utf8_decode($_POST['Indicador']));
+	$IdSector = addslashes(utf8_decode($_POST['IdSector']));
+	$FechaInicio = addslashes(utf8_decode($_POST['FechaInicio']));
+	$FechaFin = addslashes(utf8_decode($_POST['FechaFin']));
+	$Entidad = addslashes(utf8_decode($_POST['Entidad']));
+	$Expediente = addslashes(utf8_decode($_POST['Expediente']));
+	$Consultora = addslashes(utf8_decode($_POST['Consultora']));
+	$CostoTotal = addslashes(utf8_decode($_POST['CostoTotal']));
 		
 	$Fecha = DATE('Y-m-d H:i:s', time());
 	
+	$sql = "DELETE FROM Contratos_has_Proyectos
+			WHERE
+				Proyectos_IdProyecto = $IdProyecto;
+				";
+
+	$result = mysql_query($sql, $link);
+
+	$sql = "INSERT INTO 
+					Contratos_has_Proyectos 
+					(Contratos_idContrato, Proyectos_IdProyecto) 
+				VALUES 
+				(
+					'$IdContrato',
+					'$IdProyecto'
+				);";
+
+	$result = mysql_query($sql, $link);
+
 	$sql = "UPDATE Proyectos
-				SET FichaNum = '$FichaNum', Nombre = '$Nombre'
+				SET FichaNum = '$FichaNum', Nombre = '$Nombre', Componente = '$Componente' , Subcomponente = '$Subcomponente' , Indicador = '$Indicador', DefinicionComponente = '$DefinicionComponente'
 			WHERE
 				IdProyecto = $IdProyecto;
 				";
@@ -37,8 +58,7 @@
 					Entidad = '$Entidad',
 					Expediente = '$Expediente',
 					Consultora = '$Consultora',
-					CostoTotal = '$CostoTotal',
-					Fuente = $Fuente
+					CostoTotal = '$CostoTotal'
 				WHERE
 					IdProyecto = $IdProyecto;
 				";

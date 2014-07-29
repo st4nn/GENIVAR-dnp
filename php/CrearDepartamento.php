@@ -1,8 +1,8 @@
 <?php 
 	include("conectar.php"); 
 
-	$Id = $_POST['IdOwn'];
-	$Nombre = $_POST['Name'];
+	$Id = addslashes($_POST['IdOwn']);
+	$Nombre = addslashes(utf8_decode($_POST['Name']));
  
 	$link=Conectarse(); 
 	

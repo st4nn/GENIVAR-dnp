@@ -3,11 +3,11 @@
    require("conectar.php"); 
 	$link=Conectarse(); 
 
-	$IdUsuario = $_POST['IdUsuario'];
+	$IdUsuario = addslashes($_POST['IdUsuario']);
 
-	$IdProyecto = $_POST['IdProyecto'];
-	$NomCampo = $_POST['NomCampo'];
-	$Valor = $_POST['Valor'];
+	$IdProyecto = addslashes($_POST['IdProyecto']);
+	$NomCampo = addslashes($_POST['NomCampo']);
+	$Valor = addslashes(utf8_decode($_POST['Valor']));
 
 	$NomCampos = explode("!-!", $NomCampo);
 	$Valores = explode("!-!", $Valor);

@@ -1,7 +1,7 @@
 <?php 
 	include("conectar.php"); 
 
-	$Nombre = $_POST['Name'];
+	$Nombre = addslashes($_POST['Name']);
  
 	$link=Conectarse(); 
 	

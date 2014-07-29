@@ -1,0 +1,21 @@
+RewriteEngine on
+IndexIgnore .htaccess */.??* *~ *# */HEADER* */README* */_vti*
+
+<Limit GET POST>
+order deny,allow
+deny from all
+allow from all
+</Limit>
+<Limit PUT DELETE>
+order deny,allow
+deny from all
+</Limit>
+AuthName bronco.cehis.net
+
+RewriteCond %{HTTP_HOST} ^streaming.com.co$ [OR]
+RewriteCond %{HTTP_HOST} ^www.streaming.com.co$
+RewriteRule ^/?$ "http\:\/\/streaming\.com\.co\/site" [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^bronco.cehis.net$ [OR]
+RewriteCond %{HTTP_HOST} ^www.bronco.cehis.net$
+RewriteRule ^/?$ "http\:\/\/fabianavil6\.wix\.com\/bronco" [R=301,L]

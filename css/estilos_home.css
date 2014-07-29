@@ -117,7 +117,7 @@ footer
 {
 	color: white; 
 }
-#DashBoard, #Users, #BuscarFicha, #CrearFicha, #EditarFicha
+#DashBoard, #Users, #BuscarFicha, #CrearFicha, #EditarFicha, #BuscarContrato, #CrearContrato
 {
 	left: 19.5%;
 	position: absolute;
@@ -125,7 +125,7 @@ footer
 	width: 79%;
 }
 
-#DashBoard, #Users, #BuscarFicha, #CrearFicha, #EditarFicha
+#DashBoard, #Users, #BuscarFicha, #CrearFicha, #EditarFicha, #BuscarContrato, #CrearContrato
 {
 	background: white;
 	border-radius: 0.5em;
@@ -161,8 +161,17 @@ footer
 #alertBuscarFicha,
 #alertCrearFicha,
 #alertEditarFicha,
+#BuscarFicha,
 #CrearFicha_Sector,
-#EditarFicha_Sector
+#EditarFicha_Sector,
+#BuscarContrato,
+#CrearContrato,
+#frmBuscarContrato_Resultados_MasInfo,
+#BorrarFicha,
+.CrearFicha_Descripcion_Menu article,
+#CrearFichaSubcomponentes_,
+#CrearFichaSubcomponentes,
+#alertCrearContrato
 {
 	display: none;
 }
@@ -257,4 +266,137 @@ footer
 	background: #0274b0; 
 	color: white;
 	cursor: pointer;
+}
+
+@media screen and (max-width: 800px) 
+{
+	#imgHeader
+	{height: auto;width: 40%;}
+
+	#SelectedSection
+	{
+		background: blue;
+		display: inline-block; 
+	     
+	    border: none; 
+
+	    height: 2em;
+	    padding: 0px;
+	    line-height: 10%; 
+	    margin: 0 0 1em 0;
+	    
+		position: absolute;
+		top: 6.4em;
+		left: 0em;
+		vertical-align: top;
+		width: 100%;
+	}
+	#SelectedSection h4
+	{
+		background: white;
+		color: black;
+		padding: 0;
+		position: static;
+		left: 0;
+		margin: 0 0 1em 0;
+		
+		text-align: center;
+	}
+
+	#WelcomeMessage 
+	{ 
+	        font-weight: bold; 
+	        display: block; 
+	     
+	        border: none; 
+	     	padding: 0;
+	     	margin: 0;
+	        height: 0; 
+	        line-height: 50px; 
+	        width: 100%;
+	}
+	#WelcomeMessage h5
+	{
+		background: #4c4c4c;
+		color: white; 
+	}
+
+	.Seccion
+	{
+		right: 0;
+		padding: 1em;
+		top: 9.7em;
+		width: 74%;
+	}
+	.Seccion_SinMenu
+	{
+		top: 9.7em;
+		width: 95%;
+	}
+	#lnkOcultarMenu
+	{
+		display: inline-block;
+		background: url('imagenes/Menu-Callout.png')  no-repeat 50%, white;
+		float: left;
+		height: 2em;
+		margin: 0;
+		width: 2em;
+	}
+	#MainMenu
+	{
+		display: none;
+		min-width: 80%;
+	}
+	.Seccion
+	{
+		left: 90%;
+		width: 100%;
+	}
+	.Seccion_SinMenu
+	{
+		left: 1%;
+		width: 100%;
+	}
+}
+
+#DashBoard div
+{
+	display: inline-block;
+	margin: 0;
+	vertical-align: top;
+}
+#divGraficas
+{
+	height: 20em;
+	width: 97%;
+}
+.flotr-legend
+{
+	position: absolute;
+	bottom: 1em;
+	width: 97%;
+}
+#divGraficasConvenciones
+{
+	background: #D9D9D9;
+	margin: 4em 0 0 0;
+	padding: 1em 0 0 0;
+	text-align: left;
+	width: 97%;
+}
+#divGraficasConvenciones article
+{
+	background: #E6E6E6;
+	border-radius: 0.5em;
+	display: inline-block;
+	margin: 0.1em;
+	overflow: hidden;
+	padding: 0.4em;
+	text-align: left;
+	vertical-align: top;
+	width: 29%;
+}
+.flotr-legend-bg, .flotr-legend
+{
+	display: none;
 }

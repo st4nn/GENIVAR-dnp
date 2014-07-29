@@ -15,7 +15,7 @@
 		$Sectores[$Index] = new Sector();
 		
 		$Sectores[$Index]->IdSector = $row['IdSector'];
-		$Sectores[$Index]->Nombre = $row['Nombre'];
+		$Sectores[$Index]->Nombre = utf8_encode($row['Nombre']);
 	
 		$Index++;	
 		

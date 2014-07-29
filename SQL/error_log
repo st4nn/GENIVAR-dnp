@@ -1,0 +1,4 @@
+[10-Sep-2013 14:03:33] PHP Warning:  include(conectar.php) [<a href='function.include'>function.include</a>]: failed to open stream: No such file or directory in /home/sgigeniv/public_html/SQL/tmp.php on line 2
+[10-Sep-2013 14:03:33] PHP Warning:  include(conectar.php) [<a href='function.include'>function.include</a>]: failed to open stream: No such file or directory in /home/sgigeniv/public_html/SQL/tmp.php on line 2
+[10-Sep-2013 14:03:33] PHP Warning:  include() [<a href='function.include'>function.include</a>]: Failed opening 'conectar.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home/sgigeniv/public_html/SQL/tmp.php on line 2
+[10-Sep-2013 14:03:33] PHP Fatal error:  Call to undefined function  conectarse() in /home/sgigeniv/public_html/SQL/tmp.php on line 4

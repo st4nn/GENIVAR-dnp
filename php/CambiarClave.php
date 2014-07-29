@@ -1,9 +1,9 @@
 <?php 
 include("conectar.php");    
 
-	$UserId = $_POST['IdUsuarioMaestro'];
- 	$Id = $_POST['Id'];
- 	$Clave = md5($_POST['Clave']);
+	$UserId = addslashes($_POST['IdUsuarioMaestro']);
+ 	$Id = addslashes($_POST['Id']);
+ 	$Clave = addslashes(md5($_POST['Clave']));
  
  $Fecha = date('Y-m-d'); 
  
